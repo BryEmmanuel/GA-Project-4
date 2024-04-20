@@ -51,6 +51,60 @@ const register = async (req, res) => {
 };
 
 // login
-const login = async (req, res) => {};
+const login = async (req, res) => {
+  try {
+    // extract username, email and role from req.body
+    const { username, email, role } = req.body;
 
-module.exports = { getAllUsers, register };
+    // checks if username exists in database
+    const auth = await pool.query(
+      "SELECT * FROM useraccount WHERE username = $1 LIMIT 1",
+      [username]
+    );
+    console.log(auth);
+    // if username does not exist
+    if (auth.rows.length === 0) {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "Username does not exist!" });
+    }
+
+    // compare password to hash
+    // the actual data lies in rows[0].hash not rows.hash
+    const passwordLegit = await bcrypt.compare(
+      req.body.password,
+      auth.rows[0].hash
+    );
+
+    // if password is wrong, reject
+    if (!passwordLegit) {
+      console.log("You have entered the wrong password!");
+      return res.status(400).json({ status: "error", msg: "Login failed" });
+    }
+    // adding values into claims to encrypt into JWT
+    const claims = {
+      username: auth.rows[0].username,
+      role: auth.rows[0].role,
+      profilePicture: auth.rows[0].profile_picture_url,
+    };
+
+    // encrypting things above into JWT payload
+    const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
+      expiresIn: "60m",
+      jwtid: uuidv4(),
+    });
+
+    // generating refresh token
+    const refresh = jwt.sign(claims, process.env.REFRESH_SECRET, {
+      expiresIn: "30d",
+      jwtid: uuidv4(),
+    });
+
+    res.json({ access, refresh });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "failed to login" });
+  }
+};
+
+module.exports = { getAllUsers, register, login };
