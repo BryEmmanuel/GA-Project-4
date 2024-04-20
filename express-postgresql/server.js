@@ -23,6 +23,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const PORT = process.env.PORT || 5001;
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}.`);
 });
