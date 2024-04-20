@@ -9,4 +9,11 @@ CREATE TABLE useraccount(
     profile_picture_url text
 )
 
+CREATE TABLE roles(
+    role text NOT NULL
+)
+
+INSERT INTO roles(role) VALUES ('Admin')
+INSERT INTO roles(role) VALUES ('User')
+
 INSERT INTO useraccount(username, email, password, role, profile_picture_url) VALUES ('test', 'test@test.com', 'password', 'user', 'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U')
