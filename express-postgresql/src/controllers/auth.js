@@ -85,7 +85,7 @@ const login = async (req, res) => {
     const claims = {
       username: auth.rows[0].username,
       role: auth.rows[0].role,
-      profilePicture: auth.rows[0].profile_picture_url,
+      profile_picture_url: auth.rows[0].profile_picture_url,
     };
 
     // encrypting things above into JWT payload
@@ -107,4 +107,27 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, register, login };
+// refresh
+const refresh = async (req, res) => {
+  try {
+    const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
+
+    const claims = {
+      username: decoded.username,
+      role: decoded.role,
+      profile_picture_url: decoded.profile_picture_url,
+    };
+
+    const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
+      expiresIn: "60m",
+      jwtid: uuidv4(),
+    });
+
+    res.json({ access });
+  } catch (error) {
+    console.log("Error refreshing key");
+    res.status(400).json({ status: "error", msg: "Refresh failed" });
+  }
+};
+
+module.exports = { getAllUsers, register, login, refresh };
