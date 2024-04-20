@@ -6,7 +6,6 @@ const auth = require("./src/routers/auth");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
-const pool = require("./src/db/db");
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
