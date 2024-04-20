@@ -61,7 +61,7 @@ const login = async (req, res) => {
       "SELECT * FROM useraccount WHERE username = $1 LIMIT 1",
       [username]
     );
-    console.log(auth);
+
     // if username does not exist
     if (auth.rows.length === 0) {
       return res
