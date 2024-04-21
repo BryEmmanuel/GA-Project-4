@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.get("/getkdrama", getAllKdrama);
 router.post("/addkdrama", addKdrama);
-router.patch("/updatekdrama", updateKdrama);
+router.patch("/updatekdrama/:id", updateKdrama);
 
 module.exports = router;

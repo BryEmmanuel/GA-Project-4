@@ -74,11 +74,22 @@ const updateKdrama = async (req, res) => {
       );
       genreId = insertNewGenre.rows[0].genre_id;
     }
-
-    await pool.query(
-      "UPDATE k_dramas SET name = $1, number_of_episodes = $2, year_released = $3, plot = $4, image_url = $5, genre_id = $6 WHERE id = $7",
-      [name, number_of_episodes, year_released, plot, image_url, genreId, id]
+    // check if kdrama to be updated exists, only update if it exists.
+    const kdramaExist = await pool.query(
+      "SELECT id FROM k_dramas WHERE id = $1",
+      [id]
     );
+    if (kdramaExist.rows.length > 0) {
+      await pool.query(
+        "UPDATE k_dramas SET name = $1, number_of_episodes = $2, year_released = $3, plot = $4, image_url = $5, genre_id = $6 WHERE id = $7",
+        [name, number_of_episodes, year_released, plot, image_url, genreId, id]
+      );
+    } else {
+      res.status(400).json({
+        status: "failed",
+        msg: "kdrama does not exist, unable to update",
+      });
+    }
 
     res.status(200).json({ status: "success", msg: "kdrama updated" });
   } catch (error) {
