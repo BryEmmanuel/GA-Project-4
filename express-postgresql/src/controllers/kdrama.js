@@ -109,6 +109,9 @@ const deleteKdrama = async (req, res) => {
     );
     if (kdramaExist.rows.length > 0) {
       await pool.query("DELETE FROM k_dramas WHERE id = $1", [id]);
+      res
+        .status(200)
+        .json({ status: "success", msg: "kdrama deleted successfully" });
     } else {
       res.status(400).json({
         status: "failed",
