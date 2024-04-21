@@ -3,6 +3,6 @@ const { getAllKdrama, addKdrama } = require("../controllers/kdrama");
 const router = express.Router();
 
 router.get("/getkdrama", getAllKdrama);
-router.put("/addkdrama", addKdrama);
+router.post("/addkdrama", addKdrama);
 
 module.exports = router;
