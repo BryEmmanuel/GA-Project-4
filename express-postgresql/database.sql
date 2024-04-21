@@ -28,3 +28,11 @@ CREATE TABLE k_dramas(
     image_url VARCHAR(255),
     genre JSONB 
 )
+
+CREATE TABLE casts(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    year_of_birth INT,
+    height NUMERIC (5,2),
+)
+
