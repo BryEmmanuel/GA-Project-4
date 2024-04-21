@@ -26,7 +26,6 @@ CREATE TABLE k_dramas(
     year_released INT,
     plot TEXT,
     image_url VARCHAR(255),
-    genre JSONB 
 )
 
 CREATE TABLE casts(
@@ -35,4 +34,25 @@ CREATE TABLE casts(
     year_of_birth INT,
     height NUMERIC (5,2),
 )
+
+CREATE TABLE genres (
+    genre_id SERIAL PRIMARY KEY,
+    genre_name VARCHAR(255) NOT NULL UNIQUE
+);
+
+INSERT INTO genres (genre_name) VALUES
+('ACTION'),
+('HORROR'),
+('ROMANCE'),
+('FANTASY'),
+('THRILLER'),
+('COMEDY');
+
+ALTER TABLE k_dramas
+ADD COLUMN genre_id INT,
+ADD CONSTRAINT fk_genre
+FOREIGN KEY (genre_id) REFERENCES genres(genre_id);
+
+ALTER TABLE k_dramas
+DROP COLUMN genre;
 
