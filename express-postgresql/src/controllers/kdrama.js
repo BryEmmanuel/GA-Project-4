@@ -98,4 +98,27 @@ const updateKdrama = async (req, res) => {
   }
 };
 
-module.exports = { getAllKdrama, addKdrama, updateKdrama };
+// DELETE kdrama
+const deleteKdrama = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // check if id exists
+    const kdramaExist = await pool.query(
+      "SELECT id FROM k_dramas WHERE id = $1",
+      [id]
+    );
+    if (kdramaExist.rows.length > 0) {
+      await pool.query("DELETE FROM k_dramas WHERE id = $1", [id]);
+    } else {
+      res.status(400).json({
+        status: "failed",
+        msg: "kdrama does not exist, unable to delete",
+      });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "failed to delete kdrama" });
+  }
+};
+
+module.exports = { getAllKdrama, addKdrama, updateKdrama, deleteKdrama };
