@@ -16,10 +16,32 @@ const addKdrama = async (req, res) => {
   try {
     const { name, number_of_episodes, year_released, plot, image_url, genre } =
       req.body;
-    await pool.query(
-      "INSERT INTO k_dramas (name, number_of_episodes, year_released, plot, image_url, genre) VALUES ($1, $2, $3, $4, $5, $6)",
-      [name, number_of_episodes, year_released, plot, image_url, genre]
+
+    // Check if the genre exists in the genres table
+    const genreExist = await pool.query(
+      "SELECT genre_id FROM genres WHERE genre_name = $1",
+      [genre]
     );
+
+    let genreId;
+    if (genreExist.rows.length > 0) {
+      // If the genre exists, use its genre_id
+      genreId = genreExist.rows[0].genre_id;
+    } else {
+      // If the genre does not exist, insert it into the genres table and use the new genre_id
+      const insertNewGenre = await pool.query(
+        "INSERT INTO genres (genre_name) VALUES ($1) RETURNING genre_id",
+        [genre]
+      );
+      genreId = insertNewGenre.rows[0].genre_id;
+    }
+
+    await pool.query(
+      "INSERT INTO k_dramas (name, number_of_episodes, year_released, plot, image_url, genre_id) VALUES ($1, $2, $3, $4, $5, $6)",
+      [name, number_of_episodes, year_released, plot, image_url, genreId]
+    );
+
+    res.status(200).json({ status: "success", msg: "Kdrama added" });
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "failed to add kdrama" });
