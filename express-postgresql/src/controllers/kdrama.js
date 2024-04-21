@@ -87,4 +87,4 @@ const updateKdrama = async (req, res) => {
   }
 };
 
-module.exports = { getAllKdrama, addKdrama };
+module.exports = { getAllKdrama, addKdrama, updateKdrama };
