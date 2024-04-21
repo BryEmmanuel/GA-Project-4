@@ -1,3 +1,5 @@
+const pool = require("../db/db");
+
 // get all kdramas
 const getAllKdrama = async (req, res) => {
   try {
