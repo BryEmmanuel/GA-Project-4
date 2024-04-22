@@ -66,3 +66,14 @@ CREATE TABLE discussion (
     k_drama_id INTEGER,
     FOREIGN KEY (k_drama_id) REFERENCES k_dramas(id)
 );
+
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    discussion_id INTEGER,
+    user_id INTEGER,
+    contents TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (discussion_id) REFERENCES discussion(id),
+    FOREIGN KEY (user_id) REFERENCES useraccount(id)
+);
