@@ -12,8 +12,6 @@ import SideNavBar from "./components/SideNavBar";
 function App() {
   return (
     <>
-      <Navbar></Navbar>
-      <SideNavBar></SideNavBar>
       <Routes>
         <Route path="/" element={<Navigate replace to="/main" />}></Route>
         <Route path="main" element={<HomePage />}></Route>
