@@ -56,3 +56,13 @@ FOREIGN KEY (genre_id) REFERENCES genres(genre_id);
 ALTER TABLE k_dramas
 DROP COLUMN genre;
 
+-- https://www.postgresqltutorial.com/postgresql-date-functions/postgresql-current_timestamp/ for created_at
+
+CREATE TABLE discussion (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    number_of_likes INTEGER DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    k_drama_id INTEGER,
+    FOREIGN KEY (k_drama_id) REFERENCES k_dramas(id)
+);
