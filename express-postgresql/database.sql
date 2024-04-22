@@ -67,6 +67,10 @@ CREATE TABLE discussion (
     FOREIGN KEY (k_drama_id) REFERENCES k_dramas(id)
 );
 
+ALTER TABLE discussion
+ADD COLUMN description TEXT;
+
+
 
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
