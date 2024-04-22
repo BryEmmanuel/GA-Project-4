@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import SideNavBar from "../components/SideNavBar";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
+import Card from "../components/Card";
 
 const HomePage = () => {
   // useFetch
@@ -45,7 +46,16 @@ const HomePage = () => {
       <div className="homepage_container">
         homepage
         {kdramaCard.map((kdrama, index) => (
-          <Card></Card>
+          <Card
+            id={kdrama.id}
+            key={index}
+            name={kdrama.name}
+            number_of_episodes={kdrama.number_of_episodes}
+            year_released={kdrama.year_released}
+            plot={kdrama.plot}
+            image_url={kdrama.image_url}
+            genre_id={kdrama.genre_id}
+          ></Card>
         ))}
       </div>
     </>
