@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const auth = require("./src/routers/auth");
 const kdrama = require("./src/routers/kdrama");
+const discussion = require("./src/routers/discussion");
 
 const cors = require("cors");
 const helmet = require("helmet");
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", auth);
 app.use("/kdrama", kdrama);
+app.use("/discussion", discussion);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
