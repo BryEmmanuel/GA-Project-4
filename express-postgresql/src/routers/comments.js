@@ -4,6 +4,7 @@ const {
   getAllComments,
   getCommentById,
   deleteComment,
+  updateComment,
 } = require("../controllers/comments");
 const router = express.Router();
 
@@ -11,5 +12,6 @@ router.post("/new", createComment);
 router.get("/all", getAllComments);
 router.get("/:id", getCommentById);
 router.delete("/delete/:id", deleteComment);
+router.patch("/:id", updateComment);
 
 module.exports = router;
