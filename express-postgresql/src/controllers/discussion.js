@@ -78,6 +78,9 @@ const updateDiscussion = async (req, res) => {
         "UPDATE discussion SET title = $1, description = $2 WHERE id = $3",
         [title, description, id]
       );
+      res
+        .status(200)
+        .json({ status: "success", msg: "Discussion updated successfully" });
     } else {
       res
         .status(400)

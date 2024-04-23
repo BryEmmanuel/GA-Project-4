@@ -86,14 +86,13 @@ const updateKdrama = async (req, res) => {
         "UPDATE k_dramas SET name = $1, number_of_episodes = $2, year_released = $3, plot = $4, image_url = $5, genre_id = $6 WHERE id = $7",
         [name, number_of_episodes, year_released, plot, image_url, genreId, id]
       );
+      res.status(200).json({ status: "success", msg: "kdrama updated" });
     } else {
       res.status(400).json({
         status: "failed",
         msg: "kdrama does not exist, unable to update",
       });
     }
-
-    res.status(200).json({ status: "success", msg: "kdrama updated" });
   } catch (error) {
     console.error(error.message);
     res.status(400).json({ status: "error", msg: "failed to update kdrama" });
