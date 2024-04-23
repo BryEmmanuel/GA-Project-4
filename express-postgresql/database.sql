@@ -35,6 +35,11 @@ CREATE TABLE casts(
     height NUMERIC (5,2),
 )
 
+ALTER TABLE casts
+ADD COLUMN k_drama_id INT,
+ADD CONSTRAINT fk_k_drama
+FOREIGN KEY (k_drama_id) REFERENCES k_dramas(id)
+
 CREATE TABLE genres (
     genre_id SERIAL PRIMARY KEY,
     genre_name VARCHAR(255) NOT NULL UNIQUE
