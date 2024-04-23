@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.get("/getdiscussion", getAllDiscussion);
 router.post("/adddiscussion", addDiscussion);
-router.delete("/deletediscussion", deleteDiscussion);
+router.delete("/deletediscussion/:id", deleteDiscussion);
 
 module.exports = router;
