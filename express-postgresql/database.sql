@@ -51,7 +51,8 @@ INSERT INTO genres (genre_name) VALUES
 ('ROMANCE'),
 ('FANTASY'),
 ('THRILLER'),
-('COMEDY');
+('COMEDY'),
+('REVENGE');
 
 ALTER TABLE k_dramas
 ADD COLUMN genre_id INT,
