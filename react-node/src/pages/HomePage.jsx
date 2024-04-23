@@ -44,7 +44,6 @@ const HomePage = () => {
       <Navbar></Navbar>
       <SideNavBar></SideNavBar>
       <div className="homepage_container">
-        homepage
         {kdramaCard.map((kdrama, index) => (
           <Card
             id={kdrama.id}
