@@ -47,4 +47,29 @@ const getCommentById = async (req, res) => {
   }
 };
 
-module.exports = { createComment, getAllComments, getCommentById };
+// delete comment
+const deleteComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // check if comment exists
+    const commentExists = await pool.query(
+      "SELECT id FROM comments WHERE id = $1",
+      [id]
+    );
+    if (commentExists.rows.length > 0) {
+      await pool.query("DELETE FROM comments WHERE id = $1", [id]);
+      res.status(200).json({ status: "ok", msg: "comment deleted" });
+    } else {
+      res.status(400).json({ status: "error", msg: "unable to find comment" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "failed to delete comment" });
+  }
+};
+module.exports = {
+  createComment,
+  getAllComments,
+  getCommentById,
+  deleteComment,
+};
