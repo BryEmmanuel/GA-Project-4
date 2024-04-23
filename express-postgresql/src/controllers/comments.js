@@ -19,7 +19,7 @@ const createComment = async (req, res) => {
 const getAllComments = async (req, res) => {
   try {
     const allComments = await pool.query("SELECT * FROM comments");
-    res.json(allComments);
+    res.json(allComments.rows);
   } catch (error) {
     console.error(error.message);
     res
