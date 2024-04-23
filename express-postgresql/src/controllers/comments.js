@@ -28,4 +28,23 @@ const getAllComments = async (req, res) => {
   }
 };
 
-module.exports = { createComment, getAllComments };
+// get single comment
+const getCommentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const specificComment = await pool.query(
+      "SELECT * FROM comments WHERE id = $1",
+      [id]
+    );
+    if (specificComment.rows.length > 0) {
+      res.json(specificComment.rows);
+    } else {
+      res.status(400).json({ status: "error", msg: "comment not found" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "failed to get comment" });
+  }
+};
+
+module.exports = { createComment, getAllComments, getCommentById };
