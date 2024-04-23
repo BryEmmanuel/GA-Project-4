@@ -40,4 +40,26 @@ const addDiscussion = async (req, res) => {
   }
 };
 
-module.exports = { getAllDiscussion, addDiscussion };
+// delete discussion
+const deleteDiscussion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const discussionExist = await pool.query(
+      "SELECT id from discussion WHERE id = $1",
+      [id]
+    );
+    if (discussionExist.rows.length > 0) {
+      await pool.query("DELETE FROM discussion WHERE id = $1", [id]);
+      res.status(200).json({ status: "ok", msg: "discussion deleted" });
+    } else {
+      res.status(400).json({ status: "error", msg: "discussion not found" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "failed to delete discussion" });
+  }
+};
+
+module.exports = { getAllDiscussion, addDiscussion, deleteDiscussion };

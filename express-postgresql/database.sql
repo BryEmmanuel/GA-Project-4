@@ -86,3 +86,5 @@ CREATE TABLE comments (
     FOREIGN KEY (discussion_id) REFERENCES discussion(id),
     FOREIGN KEY (user_id) REFERENCES useraccount(id)
 );
+
+
