@@ -3,6 +3,8 @@ import useFetch from "../hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
 import UserContext from "../context/user";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import "./LoginPage.css";
 
 const LoginPage = () => {
   // useFetch
@@ -15,10 +17,14 @@ const LoginPage = () => {
   // state to track users
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [alert, setAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // login
   const login = async () => {
+    if (!username || !password) {
+      setErrorMessage("Please input your username/password");
+      return;
+    }
     const res = await fetchData(
       "/auth/login",
       "POST",
@@ -33,37 +39,50 @@ const LoginPage = () => {
 
       navigate("/main");
     } else {
-      setAlert(true);
+      setErrorMessage("Incorrect username/password");
     }
   };
 
   return (
     <>
+      <Navbar></Navbar>
       <div className="login_container">
-        <div className="login">
-          <input
-            type="text"
-            placeholder="Username"
-            style={{ color: "black" }}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              setAlert(false);
-            }}
-          ></input>
-          <input
-            type="password"
-            placeholder="Password"
-            style={{ color: "black" }}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setAlert(false);
-            }}
-          ></input>
-          <button type="submit" onClick={login}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            login();
+          }}
+        >
+          <div className="username_container">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              value={username}
+              style={{ color: "white" }}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setErrorMessage("");
+              }}
+            ></input>
+          </div>
+          <div className="password_container">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              value={password}
+              style={{ color: "white" }}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrorMessage("");
+              }}
+            ></input>
+          </div>
+          <button type="submit" style={{ color: "black" }}>
             Login
           </button>
-        </div>
-        {alert && <div>Incorrect username/password</div>}
+
+          {errorMessage && <div>{errorMessage}</div>}
+        </form>
       </div>
     </>
   );
