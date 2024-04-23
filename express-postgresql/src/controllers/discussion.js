@@ -44,6 +44,7 @@ const addDiscussion = async (req, res) => {
 const deleteDiscussion = async (req, res) => {
   try {
     const { id } = req.params;
+    // check if this specific discussion thread exists
     const discussionExist = await pool.query(
       "SELECT id from discussion WHERE id = $1",
       [id]
@@ -62,4 +63,37 @@ const deleteDiscussion = async (req, res) => {
   }
 };
 
-module.exports = { getAllDiscussion, addDiscussion, deleteDiscussion };
+// update discussion
+const updateDiscussion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description } = req.body;
+    // check if this specific discussion thread exists
+    const discussionExist = await pool.query(
+      "SELECT id from discussion WHERE id = $1",
+      [id]
+    );
+    if (discussionExist.rows.length > 0) {
+      await pool.query(
+        "UPDATE discussion SET title = $1, description = $2 WHERE id = $3",
+        [title, description, id]
+      );
+    } else {
+      res
+        .status(400)
+        .json({ status: "error", msg: "unable to find this discussion" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "unable to update discussion" });
+  }
+};
+
+module.exports = {
+  getAllDiscussion,
+  addDiscussion,
+  deleteDiscussion,
+  updateDiscussion,
+};
