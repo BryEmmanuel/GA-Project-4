@@ -67,9 +67,36 @@ const deleteComment = async (req, res) => {
     res.status(400).json({ status: "error", msg: "failed to delete comment" });
   }
 };
+
+// update comment
+const updateComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { contents } = req.body;
+    // check if comment exists
+    const commentExists = await pool.query(
+      "SELECT id FROM comments WHERE id = $1",
+      [id]
+    );
+    if (commentExists.rows.length > 0) {
+      await pool.query("UPDATE comments SET contents = $1 WHERE id = $2", [
+        contents,
+        id,
+      ]);
+      res.status(200).json({ status: "ok", msg: "comment updated" });
+    } else {
+      res.status(400).json({ status: "error", msg: "comment not found" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "unable to update comment" });
+  }
+};
+
 module.exports = {
   createComment,
   getAllComments,
   getCommentById,
   deleteComment,
+  updateComment,
 };
