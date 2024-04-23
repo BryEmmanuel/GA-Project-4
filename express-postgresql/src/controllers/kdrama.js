@@ -17,10 +17,12 @@ const addKdrama = async (req, res) => {
     const { name, number_of_episodes, year_released, plot, image_url, genre } =
       req.body;
 
+    const genreUpper = genre.toUpperCase();
+
     // Check if the genre exists in the genres table
     const genreExist = await pool.query(
       "SELECT genre_id FROM genres WHERE genre_name = $1",
-      [genre]
+      [genreUpper]
     );
 
     let genreId;
