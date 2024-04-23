@@ -4,6 +4,7 @@ const express = require("express");
 const auth = require("./src/routers/auth");
 const kdrama = require("./src/routers/kdrama");
 const discussion = require("./src/routers/discussion");
+const comments = require("./src/routers/comments");
 
 const cors = require("cors");
 const helmet = require("helmet");
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/auth", auth);
 app.use("/kdrama", kdrama);
 app.use("/discussion", discussion);
+app.use("/comments", comments);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
