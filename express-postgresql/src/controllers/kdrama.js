@@ -125,4 +125,31 @@ const deleteKdrama = async (req, res) => {
   }
 };
 
-module.exports = { getAllKdrama, addKdrama, updateKdrama, deleteKdrama };
+// get a specific kdrama by id
+const getKdramaById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const specificKdrama = await pool.query(
+      "SELECT * FROM k_dramas WHERE id = $1",
+      [id]
+    );
+    if (specificKdrama.rows.length > 0) {
+      res.json(specificKdrama.rows);
+    } else {
+      res.status(400).json({ status: "error", msg: "kdrama not found" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "failed to get specific kdrama" });
+  }
+};
+
+module.exports = {
+  getAllKdrama,
+  addKdrama,
+  updateKdrama,
+  deleteKdrama,
+  getKdramaById,
+};
