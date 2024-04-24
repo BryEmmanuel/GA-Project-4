@@ -4,7 +4,7 @@ const {
   addKdrama,
   updateKdrama,
   deleteKdrama,
-  getKdramaById,
+  getKdramaByName,
 } = require("../controllers/kdrama");
 const router = express.Router();
 
@@ -12,6 +12,6 @@ router.get("/getkdrama", getAllKdrama);
 router.post("/addkdrama", addKdrama);
 router.patch("/updatekdrama/:id", updateKdrama);
 router.delete("/deletekdrama/:id", deleteKdrama);
-router.get("/getkdrama/:id", getKdramaById);
+router.get("/getkdrama/:name", getKdramaByName);
 
 module.exports = router;
