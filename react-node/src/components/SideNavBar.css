@@ -1,20 +1,7 @@
-/* .sidebar {
-  position: fixed;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 150px;
-  height: 100%;
-  padding: 0 16px;
-  background-color: #393e46;
-  border-right: 1px solid #00adb5;
-  transition: 0.4s;
-} */
 .sidebar_container {
-  position: absolute;
+  position: relative;
   left: 0;
-  top: 10;
+  top: 0;
   bottom: 0;
   width: 200px;
 }
@@ -37,6 +24,6 @@
   position: sticky;
   scrollbar-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
   scrollbar-width: thin;
-  top: 56px;
+  top: 0px;
   width: 100%;
 }
