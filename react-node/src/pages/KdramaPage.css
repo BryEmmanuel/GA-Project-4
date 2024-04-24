@@ -1,0 +1,37 @@
+.kdrama_page_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.kdrama_card {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  width: 100%;
+  max-width: 600px;
+  background-color: #393e46;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.kdrama_trailer {
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.kdrama_image {
+  border-radius: 5px;
+  width: 100%;
+  height: auto; /* Adjust as needed */
+}
+
+.kdrama_details {
+  padding: 20px;
+  flex-grow: 1; /* Take up remaining space */
+}
