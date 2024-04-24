@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
 import UserContext from "../context/user";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./LoginPage.css";
 
@@ -39,6 +39,8 @@ const LoginPage = () => {
 
       navigate("/main");
     } else {
+      setUsername("");
+      setPassword("");
       setErrorMessage("Incorrect username/password");
     }
   };
@@ -54,6 +56,8 @@ const LoginPage = () => {
           }}
         >
           <div className="username_container">
+            <h1 className="login">Login</h1>
+            <br />
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -77,11 +81,20 @@ const LoginPage = () => {
               }}
             ></input>
           </div>
-          <button type="submit" style={{ color: "black" }}>
+          <br />
+          <button className="button" type="submit" style={{ color: "black" }}>
             Login
           </button>
-
-          {errorMessage && <div>{errorMessage}</div>}
+          <br />
+          {errorMessage && (
+            <div className="error_message" style={{ color: "#ff0033" }}>
+              {errorMessage}
+            </div>
+          )}
+          <br />
+          <Link to="/register" className="register">
+            Don't have an account? Sign Up!
+          </Link>
         </form>
       </div>
     </>
