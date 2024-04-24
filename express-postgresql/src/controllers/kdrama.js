@@ -128,10 +128,14 @@ const deleteKdrama = async (req, res) => {
 // get a specific kdrama by id
 const getKdramaByName = async (req, res) => {
   try {
+    // proper way to destructure name from req.params
     const { name: kdramaName } = req.params;
 
     const specificKdrama = await pool.query(
-      "SELECT * FROM k_dramas WHERE name = $1",
+      `SELECT k_dramas.*, genres.genre_name 
+      FROM k_dramas 
+      JOIN genres ON k_dramas.genre_id = genres.genre_id 
+      WHERE k_dramas.name = $1`,
       [kdramaName]
     );
     if (specificKdrama.rows.length > 0) {
