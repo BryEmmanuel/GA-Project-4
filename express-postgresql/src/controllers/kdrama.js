@@ -126,12 +126,13 @@ const deleteKdrama = async (req, res) => {
 };
 
 // get a specific kdrama by id
-const getKdramaById = async (req, res) => {
+const getKdramaByName = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { name: kdramaName } = req.params;
+
     const specificKdrama = await pool.query(
-      "SELECT * FROM k_dramas WHERE id = $1",
-      [id]
+      "SELECT * FROM k_dramas WHERE name = $1",
+      [kdramaName]
     );
     if (specificKdrama.rows.length > 0) {
       res.json(specificKdrama.rows);
@@ -151,5 +152,5 @@ module.exports = {
   addKdrama,
   updateKdrama,
   deleteKdrama,
-  getKdramaById,
+  getKdramaByName,
 };
