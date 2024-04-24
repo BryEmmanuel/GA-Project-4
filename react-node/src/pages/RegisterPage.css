@@ -19,6 +19,14 @@
   position: relative;
 }
 
+.register_container .email_container {
+  position: relative;
+}
+
+.register_container .role_container {
+  position: relative;
+}
+
 .register_container .username_container input {
   width: 100%;
   padding: 10px 0;
@@ -41,6 +49,25 @@
   border-bottom: 1px solid #fff;
   outline: none;
   background: transparent;
+}
+
+.register_container .email_container input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.register_container .role_container select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
 }
 
 .register {
