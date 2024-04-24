@@ -42,3 +42,44 @@
   outline: none;
   background: transparent;
 }
+
+.error_message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  color: #00adb5;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background-color: whitesmoke;
+  border: 1px solid #e8e8e8;
+  margin: auto;
+  display: block;
+}
+
+.button:active {
+  color: #666;
+  box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0;
+  margin: 0;
+}
+
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #00adb5;
+}
