@@ -3,5 +3,9 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 20px;
   padding: 20px;
-  margin-left: 200px;
+  flex-grow: 1;
+}
+
+.mainpage_container {
+  display: flex;
 }

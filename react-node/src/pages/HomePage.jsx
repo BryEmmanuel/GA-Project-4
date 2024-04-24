@@ -42,20 +42,23 @@ const HomePage = () => {
   return (
     <>
       <Navbar></Navbar>
-      <SideNavBar></SideNavBar>
-      <div className="homepage_container">
-        {kdramaCard.map((kdrama, index) => (
-          <Card
-            id={kdrama.id}
-            key={index}
-            name={kdrama.name}
-            number_of_episodes={kdrama.number_of_episodes}
-            year_released={kdrama.year_released}
-            plot={kdrama.plot}
-            image_url={kdrama.image_url}
-            genre_id={kdrama.genre_id}
-          ></Card>
-        ))}
+      <div className="mainpage_container">
+        <SideNavBar></SideNavBar>
+
+        <div className="homepage_container">
+          {kdramaCard.map((kdrama, index) => (
+            <Card
+              id={kdrama.id}
+              key={index}
+              name={kdrama.name}
+              number_of_episodes={kdrama.number_of_episodes}
+              year_released={kdrama.year_released}
+              plot={kdrama.plot}
+              image_url={kdrama.image_url}
+              genre_id={kdrama.genre_id}
+            ></Card>
+          ))}
+        </div>
       </div>
     </>
   );
