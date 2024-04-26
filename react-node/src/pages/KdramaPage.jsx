@@ -85,7 +85,19 @@ const KdramaPage = () => {
           />
         )}
       </div>
-
+      <div className="kdrama_discussion">
+        {kdramaPost.map((post, index) => (
+          <Post
+            key={index}
+            id={post.id}
+            title={post.title}
+            number_of_likes={post.number_of_likes}
+            created_at={post.created_at}
+            description={post.description}
+            k_drama_name={post.k_drama_name}
+          />
+        ))}
+      </div>
       <button style={{ color: "black" }} onClick={() => setShowPostModal(true)}>
         Create a Post!
       </button>
