@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -8,6 +8,7 @@ import Discussion from "./pages/Discussion";
 import Profile from "./pages/Profile";
 import useFetch from "./hooks/useFetch";
 import UserContext from "./context/user";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
   // track state of account
@@ -17,6 +18,30 @@ function App() {
 
   // useFetch
   const fetchData = useFetch();
+
+  // user access to app after certain period of time
+  const access = () => {
+    const refreshToken = localStorage.getItem("refresh");
+
+    if (!accessToken) {
+      const res = fetchData(
+        "/auth/refresh",
+        "POST",
+        { refresh: refreshToken },
+        undefined
+      );
+      if (res.ok) {
+        setAccessToken(res.data.access);
+        const decoded = jwtDecode(res.data.access);
+        setRole(decoded.role);
+        setUsername(decoded.username);
+      }
+    }
+  };
+
+  useEffect(() => {
+    access();
+  }, []);
 
   return (
     <>
