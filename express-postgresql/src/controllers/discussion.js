@@ -11,12 +11,30 @@ const getAllDiscussion = async (req, res) => {
   }
 };
 
+// get all discussions of a specific k-drama
+const getKdramaDiscussion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const specificKdramaDiscussion = await pool.query(
+      "SELECT discussion.id, discussion.title, discussion.number_of_likes, discussion.created_at,discussion.description, k_dramas.name AS k_drama_name FROM discussion JOIN k_dramas ON discussion.k_drama_id = k_dramas.id WHERE k_dramas.id = $1",
+      [id]
+    );
+    res.json(specificKdramaDiscussion.rows);
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "failed to get specific kdrama" });
+  }
+};
+
 // add discussion
 const addDiscussion = async (req, res) => {
   try {
     const { title, description, k_drama_id } = req.body;
 
     // Check if the specific k_drama exists
+    // think about using COUNT
     const kDramaExists = await pool.query(
       "SELECT EXISTS(SELECT 1 FROM k_dramas WHERE id = $1)",
       [k_drama_id]
@@ -99,4 +117,5 @@ module.exports = {
   addDiscussion,
   deleteDiscussion,
   updateDiscussion,
+  getKdramaDiscussion,
 };
