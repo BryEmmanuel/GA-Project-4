@@ -1,0 +1,49 @@
+.kdrama_discussion_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #222831;
+}
+
+.kdrama_discussion_post {
+  width: 100%;
+  max-width: 800px;
+  background-color: #222831;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.kdrama_individual_post {
+  background-color: transparent;
+  border-color: black;
+  border-top: 1px solid #ccc;
+  border-bottom: 5px;
+  border-radius: 1px;
+  padding: 15px;
+  /* margin-bottom: 15px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.kdrama_individual_post:hover,
+.kdrama_individual_post:focus-within {
+  background-color: #393e46;
+}
+
+.kdrama_individual_post h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+  color: #aaaaaa;
+}
+
+.kdrama_individual_post h2 {
+  margin-bottom: 10px;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 14px;
+  color: #aaaaaa;
+}
