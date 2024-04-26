@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import "./KdramaPage.css";
 import useFetch from "../hooks/useFetch";
 import PostModal from "../components/PostModal";
+import Post from "../components/Post";
 
 const KdramaPage = () => {
   // useParams
@@ -22,6 +23,10 @@ const KdramaPage = () => {
   // track state of new post modal
   const [showPostModal, setShowPostModal] = useState(false);
 
+  // track state of kdrama post
+  const [kdramaPost, setKdramaPost] = useState([]);
+
+  // get specific kdrama
   const getKdramaById = async () => {
     const res = await fetchData(
       "/kdrama/getkdrama/" + kdrama,
@@ -40,10 +45,24 @@ const KdramaPage = () => {
     }
   };
 
+  // get discussions of the specific kdrama
+  const getKdramaDiscussionById = async () => {
+    const res = await fetchData(
+      "/discussion/getkdramadiscussion/" + kdrama,
+      "GET",
+      undefined,
+      undefined
+    );
+    if (res.ok) {
+      const data = [...res.data];
+      setKdramaPost(data);
+    }
+  };
+
   useEffect(() => {
     getKdramaById();
+    getKdramaDiscussionById();
   }, []);
-
   return (
     <>
       <div className="kdrama_page_container">
@@ -66,6 +85,7 @@ const KdramaPage = () => {
           />
         )}
       </div>
+
       <button style={{ color: "black" }} onClick={() => setShowPostModal(true)}>
         Create a Post!
       </button>
