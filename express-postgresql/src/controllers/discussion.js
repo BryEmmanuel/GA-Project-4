@@ -14,10 +14,10 @@ const getAllDiscussion = async (req, res) => {
 // get all discussions of a specific k-drama
 const getKdramaDiscussion = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { name: kdramaName } = req.params;
     const specificKdramaDiscussion = await pool.query(
-      "SELECT discussion.id, discussion.title, discussion.number_of_likes, discussion.created_at,discussion.description, k_dramas.name AS k_drama_name FROM discussion JOIN k_dramas ON discussion.k_drama_id = k_dramas.id WHERE k_dramas.id = $1",
-      [id]
+      "SELECT discussion.id, discussion.title, discussion.number_of_likes, discussion.created_at,discussion.description, k_dramas.name AS k_drama_name FROM discussion JOIN k_dramas ON discussion.k_drama_id = k_dramas.id WHERE k_dramas.name = $1",
+      [kdramaName]
     );
     res.json(specificKdramaDiscussion.rows);
   } catch (error) {
