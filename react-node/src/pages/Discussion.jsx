@@ -35,17 +35,23 @@ const Discussion = () => {
 
   return (
     <>
-      {discussions.map((post, index) => (
-        <Post
-          key={index}
-          id={post.id}
-          title={post.title}
-          number_of_likes={post.number_of_likes}
-          created_at={post.created_at}
-          k_drama_id={post.k_drama_id}
-          description={post.description}
-        ></Post>
-      ))}
+      <div className="kdrama_discussion_container">
+        <div className="kdrama_discussion_post">
+          {discussions.map((post, index) => (
+            <div className="kdrama_individual_post">
+              <Post
+                key={index}
+                id={post.id}
+                title={post.title}
+                number_of_likes={post.number_of_likes}
+                created_at={post.created_at}
+                k_drama_id={post.k_drama_id}
+                description={post.description}
+              ></Post>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 };
