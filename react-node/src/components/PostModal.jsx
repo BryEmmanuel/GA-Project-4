@@ -26,7 +26,7 @@ const Overlay = (props) => {
         undefined
       );
       if (res.ok) {
-        props.getAllDisuccions();
+        props.getKdramaDiscussionById();
         props.setShowPostModal(false);
       }
     } catch (error) {
@@ -36,15 +36,35 @@ const Overlay = (props) => {
     }
   };
 
+  // function to close modal
+  const closeModal = (e) => {
+    e.preventDefault();
+    props.setShowPostModal(false);
+  };
+
   return (
     <>
       <div className={styles.backdrop}>
         <div className={styles.modal}>
           <h1 style={{ color: "black" }}>Create a New Discussion</h1>
           <form onSubmit={addNewDiscussion}>
-            <input ref={titleRef} type="text" placeholder="Title" required />
-            <textarea ref={descriptionRef} placeholder="Description" required />
+            <input
+              ref={titleRef}
+              type="text"
+              placeholder="Title"
+              required
+              style={{ color: "black" }}
+            />
+            <textarea
+              ref={descriptionRef}
+              placeholder="Description"
+              required
+              style={{ color: "black" }}
+            />
+
             <button type="submit">Submit</button>
+            <br />
+            <button onClick={closeModal}>Close</button>
           </form>
         </div>
       </div>
@@ -59,7 +79,7 @@ const PostModal = (props) => {
         <Overlay
           kdramaid={props.kdramaid}
           setKdramaid={props.setKdramaid}
-          getAllDiscussions={props.getAllDiscussions}
+          getKdramaDiscussionById={props.getKdramaDiscussionById}
           setShowPostModal={props.setShowPostModal}
         ></Overlay>,
         document.querySelector("#modal-root")
