@@ -80,27 +80,32 @@ const KdramaPage = () => {
         {showPostModal && (
           <PostModal
             setShowPostModal={setShowPostModal}
+            getKdramaDiscussionById={getKdramaDiscussionById}
             setKdramaid={setKdramaid}
             kdramaid={kdramaid}
           />
         )}
       </div>
-      <div className="kdrama_discussion">
-        {kdramaPost.map((post, index) => (
-          <Post
-            key={index}
-            id={post.id}
-            title={post.title}
-            number_of_likes={post.number_of_likes}
-            created_at={post.created_at}
-            description={post.description}
-            k_drama_name={post.k_drama_name}
-          />
-        ))}
+      <div className="kdrama_discussion_container">
+        <div className="kdrama_discussion_post">
+          {kdramaPost.map((post, index) => (
+            <div className="kdrama_individual_post">
+              <Post
+                key={index}
+                id={post.id}
+                title={post.title}
+                number_of_likes={post.number_of_likes}
+                created_at={post.created_at}
+                description={post.description}
+                k_drama_name={post.k_drama_name}
+              />
+            </div>
+          ))}
+        </div>
       </div>
-      <button style={{ color: "black" }} onClick={() => setShowPostModal(true)}>
-        Create a Post!
-      </button>
+      <div className="buttons_container">
+        <button onClick={() => setShowPostModal(true)}>Create a Post!</button>
+      </div>
     </>
   );
 };
