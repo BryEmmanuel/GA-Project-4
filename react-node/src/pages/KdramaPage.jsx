@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./KdramaPage.css";
 import useFetch from "../hooks/useFetch";
+import PostModal from "../components/PostModal";
 
 const KdramaPage = () => {
   // useParams
@@ -16,6 +17,10 @@ const KdramaPage = () => {
   const [plot, setPlot] = useState("");
   const [image, setImage] = useState("");
   const [genre, setGenre] = useState("");
+  const [kdramaid, setKdramaid] = useState("");
+
+  // track state of new post modal
+  const [showPostModal, setShowPostModal] = useState(false);
 
   const getKdramaById = async () => {
     const res = await fetchData(
@@ -31,7 +36,7 @@ const KdramaPage = () => {
       setPlot(res.data[0].plot);
       setImage(res.data[0].image_url);
       setGenre(res.data[0].genre_name);
-      console.log(res.data[0].image_url);
+      setKdramaid(res.data[0].id);
     }
   };
 
@@ -53,7 +58,17 @@ const KdramaPage = () => {
             <p>Genre: {genre}</p>
           </div>
         </div>
+        {showPostModal && (
+          <PostModal
+            setShowPostModal={setShowPostModal}
+            setKdramaid={setKdramaid}
+            kdramaid={kdramaid}
+          />
+        )}
       </div>
+      <button style={{ color: "black" }} onClick={() => setShowPostModal(true)}>
+        Create a Post!
+      </button>
     </>
   );
 };
