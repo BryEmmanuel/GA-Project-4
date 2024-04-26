@@ -37,6 +37,7 @@ const HomePage = () => {
 
   useEffect(() => {
     displayKdrama();
+    console.log(userCtx.role);
   }, []);
 
   return (
