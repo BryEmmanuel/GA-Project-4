@@ -1,10 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import "./Post.css";
 
 const Post = (props) => {
   return (
     <div>
-      <h1>{props.title}</h1>
-      <h2>{props.description}</h2>
+      <Link to={`/discussion/${props.id}`} className="post">
+        <h1>{props.title}</h1>
+        <h2>{props.description}</h2>
+      </Link>
     </div>
   );
 };
