@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import useFetch from "./hooks/useFetch";
 import UserContext from "./context/user";
 import { jwtDecode } from "jwt-decode";
+import Favourites from "./pages/Favourites";
 
 function App() {
   // track state of account
@@ -63,6 +64,7 @@ function App() {
           <Route path="main/:kdrama" element={<KdramaPage />}></Route>
           <Route path="discussion" element={<Discussion />}></Route>
           <Route path="profile" element={<Profile />}></Route>
+          <Route path="favourite" element={<Favourites />}></Route>
         </Routes>
       </UserContext.Provider>
     </>
