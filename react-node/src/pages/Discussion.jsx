@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import Post from "../components/Post";
+import Navbar from "../components/Navbar";
 
 const Discussion = () => {
   // useFetch
@@ -35,6 +36,7 @@ const Discussion = () => {
 
   return (
     <>
+      <Navbar></Navbar>
       <div className="kdrama_discussion_container">
         <div className="kdrama_discussion_post">
           {discussions.map((post, index) => (
