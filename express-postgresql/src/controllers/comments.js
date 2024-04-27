@@ -50,7 +50,18 @@ const getCommentById = async (req, res) => {
 // get comments from a discussion post
 const getDiscussionComments = async (req, res) => {
   try {
-  } catch (error) {}
+    const { id } = req.params;
+    const discussionComments = await pool.query(
+      "SELECT comments.id, comments.discussion_id, comments.user_id, comments.contents, comments.created_at, discussion.title FROM comments JOIN discussion ON comments.discussion_id = discussion.id WHERE discussion.id = $1",
+      [id]
+    );
+    res.json(discussionComments.rows);
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "failed to get discussion comments" });
+  }
 };
 
 // delete comment
@@ -105,4 +116,5 @@ module.exports = {
   getCommentById,
   deleteComment,
   updateComment,
+  getDiscussionComments,
 };
