@@ -7,7 +7,7 @@ const pool = require("../db/db");
 const getAllUsers = async (req, res) => {
   try {
     const allUsers = await pool.query(
-      "SELECT username, email, role FROM useraccount"
+      "SELECT username, email, role, id FROM useraccount"
     );
     res.json(allUsers.rows);
   } catch (error) {
