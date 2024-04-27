@@ -1,0 +1,38 @@
+.comments-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f6f7f8;
+  border-radius: 5px;
+}
+
+.individual_comment_container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+  color: #333333;
+  font-size: 12px;
+}
+
+.content {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.time {
+  font-size: 12px;
+  color: #777;
+  margin-top: 5px;
+}
