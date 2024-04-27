@@ -5,7 +5,7 @@ import "./Post.css";
 const Post = (props) => {
   return (
     <div>
-      <Link to={`/discussion/${props.id}`} className="post">
+      <Link to={`/discussion/comments/${props.id}`} className="post">
         <h1>{props.title}</h1>
         <h2>{props.description}</h2>
       </Link>
