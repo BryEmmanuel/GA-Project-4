@@ -64,7 +64,7 @@ function App() {
           <Route path="main/:kdrama" element={<KdramaPage />}></Route>
           <Route path="discussion" element={<Discussion />}></Route>
           <Route path="profile" element={<Profile />}></Route>
-          <Route path="favourite" element={<Favourites />}></Route>
+          <Route path="favourites" element={<Favourites />}></Route>
         </Routes>
       </UserContext.Provider>
     </>
