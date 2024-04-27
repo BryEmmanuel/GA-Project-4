@@ -28,6 +28,23 @@ const getKdramaDiscussion = async (req, res) => {
   }
 };
 
+// get specific discussion
+const getSpecificDiscussion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const specificDiscussion = await pool.query(
+      "SELECT * FROM discussion WHERE discussion.id = $1",
+      [id]
+    );
+    res.json(specificDiscussion.rows);
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "failed to get specific discussion" });
+  }
+};
+
 // add discussion
 const addDiscussion = async (req, res) => {
   try {
@@ -118,4 +135,5 @@ module.exports = {
   deleteDiscussion,
   updateDiscussion,
   getKdramaDiscussion,
+  getSpecificDiscussion,
 };
