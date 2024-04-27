@@ -11,7 +11,6 @@ const Navbar = () => {
     localStorage.clear("refresh");
     userCtx.setRole("");
     userCtx.setAccessToken("");
-    userCtx.setProfilePic("");
   };
 
   return (
