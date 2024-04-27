@@ -47,6 +47,12 @@ const getCommentById = async (req, res) => {
   }
 };
 
+// get comments from a discussion post
+const getDiscussionComments = async (req, res) => {
+  try {
+  } catch (error) {}
+};
+
 // delete comment
 const deleteComment = async (req, res) => {
   try {
