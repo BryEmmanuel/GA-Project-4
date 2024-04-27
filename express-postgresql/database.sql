@@ -88,4 +88,6 @@ CREATE TABLE comments (
     FOREIGN KEY (user_id) REFERENCES useraccount(id)
 );
 
+ALTER TABLE comments
+ADD COLUMN parent_id INTEGER REFERENCES comments(id);
 
