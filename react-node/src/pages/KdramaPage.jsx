@@ -4,6 +4,7 @@ import "./KdramaPage.css";
 import useFetch from "../hooks/useFetch";
 import PostModal from "../components/PostModal";
 import Post from "../components/Post";
+import Navbar from "../components/Navbar";
 
 const KdramaPage = () => {
   // useParams
@@ -65,6 +66,7 @@ const KdramaPage = () => {
   }, []);
   return (
     <>
+      <Navbar></Navbar>
       <div className="kdrama_page_container">
         <div className="kdrama_card">
           <div className="kdrama_trailer">TRAILER</div>
