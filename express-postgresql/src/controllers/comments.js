@@ -52,7 +52,7 @@ const getDiscussionComments = async (req, res) => {
   try {
     const { id } = req.params;
     const discussionComments = await pool.query(
-      "SELECT comments.id, comments.discussion_id, comments.user_id, comments.contents, comments.created_at, discussion.title FROM comments JOIN discussion ON comments.discussion_id = discussion.id WHERE discussion.id = $1",
+      "SELECT comments.id, comments.discussion_id, comments.user_id, comments.contents, comments.created_at, discussion.title, useraccount.username FROM comments JOIN discussion ON comments.discussion_id = discussion.id JOIN useraccount ON comments.user_id = useraccount.id WHERE discussion.id = $1",
       [id]
     );
     res.json(discussionComments.rows);
