@@ -15,6 +15,7 @@ const Comments = () => {
   const [postTitle, setPostTitle] = useState("");
   const [postDescription, setPostDescription] = useState("");
   const [postUsername, setPostUsername] = useState("");
+  const [numberOfLikes, setNumberOfLikes] = useState("");
 
   // track state of comments
   const [comments, setComments] = useState([]);
@@ -31,7 +32,7 @@ const Comments = () => {
       setPostTitle(res.data[0].title);
       setPostDescription(res.data[0].description);
       setPostUsername(res.data[0].username);
-      console.log(res.data);
+      setNumberOfLikes(res.data[0].number_of_likes);
     }
   };
 
@@ -86,10 +87,20 @@ const Comments = () => {
     <>
       <Navbar></Navbar>
       <div className="post_container">
-        <div className="post_discussion">
+        <div className="post_header">
+          <h6>{postUsername}</h6>
+        </div>
+        <div className="post_content">
           <h2>{postTitle}</h2>
           <h6>{postDescription}</h6>
-          <h6>{postUsername}</h6>
+        </div>
+        <div className="post_interactions">
+          <button className="like_button">
+            <span className="like_icon">Like</span>
+            {numberOfLikes}
+            <span className="dislike_icon">Dislike</span>
+          </button>
+          <button className="comment_button">Comment</button>
         </div>
         <div className="post_comments">
           {comments.map((comment, index) => (
