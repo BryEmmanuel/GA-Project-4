@@ -85,6 +85,7 @@ const login = async (req, res) => {
     const claims = {
       username: auth.rows[0].username,
       role: auth.rows[0].role,
+      user_id: auth.rows[0].id,
       profile_picture_url: auth.rows[0].profile_picture_url,
     };
 
@@ -115,6 +116,7 @@ const refresh = async (req, res) => {
     const claims = {
       username: decoded.username,
       role: decoded.role,
+      user_id: decoded.id,
       profile_picture_url: decoded.profile_picture_url,
     };
 
