@@ -1,21 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import "./Comments.css";
 import Navbar from "../components/Navbar";
 import Comment from "../components/Comment";
+import { AiOutlineLike } from "react-icons/ai";
+import { AiOutlineDislike } from "react-icons/ai";
+import UserContext from "../context/user";
 
 const Comments = () => {
   // useFetch
   const fetchData = useFetch();
   // useParams
   const { id } = useParams();
+  // useContext
+  const userCtx = useContext(UserContext);
 
   // track state of discussion post
   const [postTitle, setPostTitle] = useState("");
   const [postDescription, setPostDescription] = useState("");
   const [postUsername, setPostUsername] = useState("");
   const [numberOfLikes, setNumberOfLikes] = useState("");
+
+  // track if user has liked/disliked a post
+  const [hasLiked, setHasLiked] = useState(false);
+  const [hasDisliked, setHasDisliked] = useState(false);
 
   // track state of comments
   const [comments, setComments] = useState([]);
@@ -78,10 +87,42 @@ const Comments = () => {
     return "just now";
   }
 
+  // function to handle likes counter
+  const handleLikeButton = async () => {
+    if (!hasLiked) {
+      const res = await fetchData(
+        "/discussion/increaselikes/" + id,
+        "PATCH",
+        undefined,
+        undefined
+      );
+      if (res.ok) {
+        setHasLiked(true);
+        setHasDisliked(false);
+      }
+    }
+  };
+
+  // function to handle dislike counter
+  const handleDislikeButton = async () => {
+    if (!hasDisliked) {
+      const res = await fetchData(
+        "/discussion/decreaselikes/" + id,
+        "PATCH",
+        undefined,
+        undefined
+      );
+      if (res.ok) {
+        setHasDisliked(true);
+        setHasLiked(false);
+      }
+    }
+  };
+
   useEffect(() => {
     getDiscussionById();
     getCommentsOfDiscussion();
-  }, []);
+  }, [hasLiked, hasDisliked]);
 
   return (
     <>
@@ -96,9 +137,17 @@ const Comments = () => {
         </div>
         <div className="post_interactions">
           <button className="like_button">
-            <span className="like_icon">Like</span>
-            {numberOfLikes}
-            <span className="dislike_icon">Dislike</span>
+            <AiOutlineLike
+              className="like_icon"
+              onClick={handleLikeButton}
+              disabled={hasLiked}
+            />
+            <span>{numberOfLikes}</span>
+            <AiOutlineDislike
+              className="dislike_icon"
+              onClick={handleDislikeButton}
+              disabled={hasDisliked}
+            />
           </button>
           <button className="comment_button">Comment</button>
         </div>
