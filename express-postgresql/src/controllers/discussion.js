@@ -16,7 +16,7 @@ const getKdramaDiscussion = async (req, res) => {
   try {
     const { name: kdramaName } = req.params;
     const specificKdramaDiscussion = await pool.query(
-      "SELECT discussion.id, discussion.title, discussion.number_of_likes, discussion.created_at,discussion.description, k_dramas.name AS k_drama_name FROM discussion JOIN k_dramas ON discussion.k_drama_id = k_dramas.id WHERE k_dramas.name = $1",
+      "SELECT discussion.id, discussion.title, discussion.number_of_likes, discussion.created_at, discussion.description, k_dramas.name AS k_drama_name, useraccount.username FROM discussion JOIN k_dramas ON discussion.k_drama_id = k_dramas.id JOIN useraccount ON discussion.user_id = useraccount.id WHERE k_dramas.name = $1",
       [kdramaName]
     );
     res.json(specificKdramaDiscussion.rows);
@@ -33,7 +33,7 @@ const getSpecificDiscussion = async (req, res) => {
   try {
     const { id } = req.params;
     const specificDiscussion = await pool.query(
-      "SELECT * FROM discussion WHERE discussion.id = $1",
+      "SELECT discussion.*, useraccount.username FROM discussion JOIN useraccount ON discussion.user_id = useraccount.id WHERE discussion.id = $1",
       [id]
     );
     res.json(specificDiscussion.rows);
