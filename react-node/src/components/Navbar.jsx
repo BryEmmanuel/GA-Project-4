@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <>
-      {userCtx.role === "user" ? (
+      {userCtx.role === "user" || "Admin" || "User" ? (
         <header className="Navbar">
           <nav className="navbar_container">
             <Link to="/main">
