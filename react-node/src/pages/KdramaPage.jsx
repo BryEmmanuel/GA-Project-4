@@ -100,6 +100,7 @@ const KdramaPage = () => {
                 created_at={post.created_at}
                 description={post.description}
                 k_drama_name={post.k_drama_name}
+                username={post.username}
               />
             </div>
           ))}
