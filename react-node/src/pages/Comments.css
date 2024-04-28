@@ -55,17 +55,18 @@
   color: white;
   border: none;
   padding: 5px 10px;
-  cursor: pointer;
 }
 
-.like_button:hover,
-.comment_button:hover {
-  background-color: #005a9e;
+button::before {
+  background-color: black;
+  pointer-events: none;
+  background-color: initial; /* Reset hover effect */
+  box-shadow: none;
 }
 
 .like_icon {
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .dislike_icon {
-  margin-left: 5px;
+  margin-left: 10px;
 }
