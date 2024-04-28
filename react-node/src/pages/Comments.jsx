@@ -14,6 +14,7 @@ const Comments = () => {
   // track state of discussion post
   const [postTitle, setPostTitle] = useState("");
   const [postDescription, setPostDescription] = useState("");
+  const [postUsername, setPostUsername] = useState("");
 
   // track state of comments
   const [comments, setComments] = useState([]);
@@ -29,6 +30,8 @@ const Comments = () => {
     if (res.ok) {
       setPostTitle(res.data[0].title);
       setPostDescription(res.data[0].description);
+      setPostUsername(res.data[0].username);
+      console.log(res.data);
     }
   };
 
@@ -86,6 +89,7 @@ const Comments = () => {
         <div className="post_discussion">
           <h2>{postTitle}</h2>
           <h6>{postDescription}</h6>
+          <h6>{postUsername}</h6>
         </div>
         <div className="post_comments">
           {comments.map((comment, index) => (
