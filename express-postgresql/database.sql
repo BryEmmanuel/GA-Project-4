@@ -91,3 +91,7 @@ CREATE TABLE comments (
 ALTER TABLE comments
 ADD COLUMN parent_id INTEGER REFERENCES comments(id);
 
+ALTER TABLE discussion
+ADD COLUMN user_id INTEGER,
+ADD CONSTRAINT fk_discussion_useraccount
+FOREIGN KEY (user_id) REFERENCES useraccount(id);
