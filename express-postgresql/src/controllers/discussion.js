@@ -145,6 +145,21 @@ const increaseLikes = async (req, res) => {
   }
 };
 
+// decrease likes
+const decreaseLikes = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query(
+      "UPDATE discussion SET number_of_likes = number_of_likes - 1 WHERE id = $1",
+      [id]
+    );
+    res.status(200).json({ status: "success", msg: "likes updated" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "unable to update likes" });
+  }
+};
+
 module.exports = {
   getAllDiscussion,
   addDiscussion,
@@ -153,4 +168,5 @@ module.exports = {
   getKdramaDiscussion,
   getSpecificDiscussion,
   increaseLikes,
+  decreaseLikes,
 };
