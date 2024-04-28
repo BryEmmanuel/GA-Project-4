@@ -48,7 +48,7 @@ const getSpecificDiscussion = async (req, res) => {
 // add discussion
 const addDiscussion = async (req, res) => {
   try {
-    const { title, description, k_drama_id } = req.body;
+    const { title, description, k_drama_id, user_id } = req.body;
 
     // Check if the specific k_drama exists
     // think about using COUNT
@@ -65,8 +65,8 @@ const addDiscussion = async (req, res) => {
     }
 
     await pool.query(
-      "INSERT INTO discussion (title, description, k_drama_id) VALUES ($1, $2, $3)",
-      [title, description, k_drama_id]
+      "INSERT INTO discussion (title, description, k_drama_id, user_id) VALUES ($1, $2, $3, $4)",
+      [title, description, k_drama_id, user_id]
     );
     res.status(200).json({ status: "ok", msg: "discussion added" });
   } catch (error) {
