@@ -226,7 +226,8 @@ const Comments = () => {
                 created_at={timeAgo(new Date(comment.created_at))}
                 username={comment.username}
               ></Comment>
-            ))}
+            ))
+            .reverse()}
         </div>
       </div>
     </>
