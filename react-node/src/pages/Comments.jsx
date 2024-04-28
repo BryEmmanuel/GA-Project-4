@@ -29,6 +29,15 @@ const Comments = () => {
   // track state of comments
   const [comments, setComments] = useState([]);
 
+  // track toggle state of button and input
+  const [isInput, setIsInput] = useState(false);
+
+  // track state of input comment field
+  const [commentContents, setCommentContents] = useState("");
+
+  // track state of commented
+  const [hasCommented, setHasCommented] = useState(false);
+
   // get specific discussion
   const getDiscussionById = async () => {
     const res = await fetchData(
@@ -119,10 +128,39 @@ const Comments = () => {
     }
   };
 
+  // function to toggle between button and input field
+  const toggleButtonInput = () => {
+    setIsInput(!isInput);
+  };
+
+  // function to add comment
+  const addComment = async (e) => {
+    e.preventDefault();
+    const res = await fetchData(
+      "/comments/new",
+      "POST",
+      {
+        discussion_id: id,
+        user_id: userCtx.userId,
+        contents: commentContents,
+      },
+      undefined
+    );
+    if (res.ok) {
+      setCommentContents("");
+      if (hasCommented === false) {
+        setHasCommented(true);
+      } else {
+        setHasCommented(false);
+      }
+      console.log("comment added");
+    }
+  };
+
   useEffect(() => {
     getDiscussionById();
     getCommentsOfDiscussion();
-  }, [hasLiked, hasDisliked]);
+  }, [hasLiked, hasDisliked, hasCommented]);
 
   return (
     <>
@@ -149,7 +187,34 @@ const Comments = () => {
               disabled={hasDisliked}
             />
           </button>
-          <button className="comment_button">Comment</button>
+          {isInput ? (
+            <form className="inputForm">
+              <input
+                type="text"
+                style={{ color: "black" }}
+                placeholder="Enter comment"
+                onChange={(e) => setCommentContents(e.target.value)}
+              />
+              <button
+                type="submit"
+                className="comment_button"
+                onClick={addComment}
+              >
+                Comment
+              </button>
+              <button
+                type="button"
+                className="close_button"
+                onClick={toggleButtonInput}
+              >
+                X
+              </button>
+            </form>
+          ) : (
+            <button onClick={toggleButtonInput} className="comment_button">
+              Comment
+            </button>
+          )}
         </div>
         <div className="post_comments">
           {comments.map((comment, index) => (
