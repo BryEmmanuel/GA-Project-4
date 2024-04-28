@@ -22,6 +22,7 @@ const Overlay = (props) => {
           title: titleRef.current.value,
           description: descriptionRef.current.value,
           k_drama_id: props.kdramaid,
+          user_id: userCtx.userId,
         },
         undefined
       );
