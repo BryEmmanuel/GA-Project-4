@@ -50,7 +50,8 @@
 }
 
 .like_button,
-.comment_button {
+.comment_button,
+.close_button {
   background-color: #0079d3;
   color: white;
   border: none;
