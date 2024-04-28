@@ -33,9 +33,11 @@ const LoginPage = () => {
     );
     if (res.ok) {
       userCtx.setAccessToken(res.data.access);
+      localStorage.setItem("refresh", res.data.refresh);
       const decoded = jwtDecode(res.data.access);
       userCtx.setUsername(decoded.username);
       userCtx.setRole(decoded.role);
+      userCtx.setUserId(decoded.user_id);
 
       navigate("/main");
     } else {
