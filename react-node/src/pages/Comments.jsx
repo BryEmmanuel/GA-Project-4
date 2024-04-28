@@ -217,14 +217,16 @@ const Comments = () => {
           )}
         </div>
         <div className="post_comments">
-          {comments.map((comment, index) => (
-            <Comment
-              key={index}
-              contents={comment.contents}
-              created_at={timeAgo(new Date(comment.created_at))}
-              username={comment.username}
-            ></Comment>
-          ))}
+          {[...comments]
+            .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+            .map((comment, index) => (
+              <Comment
+                key={index}
+                contents={comment.contents}
+                created_at={timeAgo(new Date(comment.created_at))}
+                username={comment.username}
+              ></Comment>
+            ))}
         </div>
       </div>
     </>
