@@ -17,16 +17,17 @@ function App() {
   const [accessToken, setAccessToken] = useState("");
   const [role, setRole] = useState("");
   const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState("");
 
   // useFetch
   const fetchData = useFetch();
 
   // user access to app after certain period of time
-  const access = () => {
+  const access = async () => {
     const refreshToken = localStorage.getItem("refresh");
 
     if (!accessToken) {
-      const res = fetchData(
+      const res = await fetchData(
         "/auth/refresh",
         "POST",
         { refresh: refreshToken },
@@ -37,6 +38,7 @@ function App() {
         const decoded = jwtDecode(res.data.access);
         setRole(decoded.role);
         setUsername(decoded.username);
+        setUserId(decoded.user_id);
       }
     }
   };
@@ -55,6 +57,8 @@ function App() {
           setRole,
           username,
           setUsername,
+          userId,
+          setUserId,
         }}
       >
         <Routes>
