@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./KdramaPage.css";
 import useFetch from "../hooks/useFetch";
 import PostModal from "../components/PostModal";
 import Post from "../components/Post";
 import Navbar from "../components/Navbar";
+import UserContext from "../context/user";
 
 const KdramaPage = () => {
   // useParams
   const { kdrama } = useParams();
   // useFetch
   const fetchData = useFetch();
+  // useContext
+  const userCtx = useContext(UserContext);
 
   // states of the kdrama
   const [name, setName] = useState("");
@@ -67,6 +70,7 @@ const KdramaPage = () => {
   return (
     <>
       <Navbar></Navbar>
+
       <div className="kdrama_page_container">
         <div className="kdrama_card">
           <div className="kdrama_trailer">TRAILER</div>
