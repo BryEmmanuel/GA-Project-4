@@ -49,6 +49,7 @@ const Discussion = () => {
                 created_at={post.created_at}
                 k_drama_id={post.k_drama_id}
                 description={post.description}
+                username={post.username}
               ></Post>
             </div>
           ))}
