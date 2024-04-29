@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import Post from "../components/Post";
 import Navbar from "../components/Navbar";
+import "./Discussion.css";
+import UserContext from "../context/user";
 
 const Discussion = () => {
   // useFetch
   const fetchData = useFetch();
+
+  // useContext
+  const userCtx = useContext(UserContext);
 
   // track state of discussion list
   const [discussions, setDiscussions] = useState([]);
@@ -20,13 +25,31 @@ const Discussion = () => {
         undefined
       );
       if (res.ok) {
-        const data = [...res.data];
+        const data = res.data.filter(
+          (discussion) => discussion.is_deleted === false
+        );
         setDiscussions(data);
       }
     } catch (error) {
       if (error.name !== "AbortError") {
         console.error(error.message);
       }
+    }
+  };
+
+  // delete post
+  const deletePost = async (id) => {
+    const res = await fetchData(
+      "/discussion/deletediscussion/" + id,
+      "DELETE",
+      undefined,
+      undefined
+    );
+    if (res.ok) {
+      // Remove the deleted discussion from the state
+      setDiscussions(discussions.filter((post) => post.id !== id));
+    } else {
+      console.error("Failed to delete");
     }
   };
 
@@ -50,7 +73,18 @@ const Discussion = () => {
                 k_drama_id={post.k_drama_id}
                 description={post.description}
                 username={post.username}
+                is_deleted={post.is_deleted}
               ></Post>
+              {userCtx.role === "Admin" && (
+                <button
+                  className="delete_post_button"
+                  onClick={() => {
+                    deletePost(post.id);
+                  }}
+                >
+                  Delete
+                </button>
+              )}
             </div>
           ))}
         </div>
