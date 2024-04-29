@@ -11,6 +11,7 @@ import UserContext from "./context/user";
 import { jwtDecode } from "jwt-decode";
 import Favourites from "./pages/Favourites";
 import Comments from "./pages/Comments";
+import UploadPage from "./pages/UploadPage";
 
 function App() {
   // track state of account
@@ -77,6 +78,7 @@ function App() {
           <Route path="main/:kdrama" element={<KdramaPage />}></Route>
           <Route path="discussion" element={<Discussion />}></Route>
           <Route path="discussion/comments/:id" element={<Comments />}></Route>
+          <Route path="upload" element={<UploadPage />}></Route>
           <Route path="profile" element={<Profile />}></Route>
           <Route path="favourites" element={<Favourites />}></Route>
         </Routes>
