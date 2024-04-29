@@ -26,7 +26,11 @@ function App() {
   const access = async () => {
     const refreshToken = localStorage.getItem("refresh");
 
-    if (!accessToken) {
+    if (!refreshToken) {
+      console.error("No refresh token found");
+      return;
+    }
+    try {
       const res = await fetchData(
         "/auth/refresh",
         "POST",
@@ -39,7 +43,11 @@ function App() {
         setRole(decoded.role);
         setUsername(decoded.username);
         setUserId(decoded.user_id);
+      } else {
+        console.error("Failed to refresh access token:");
       }
+    } catch (error) {
+      console.error("Error refreshing access token:");
     }
   };
 
