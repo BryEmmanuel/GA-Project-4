@@ -14,8 +14,15 @@ const getAllKdrama = async (req, res) => {
 // add kdramas
 const addKdrama = async (req, res) => {
   try {
-    const { name, number_of_episodes, year_released, plot, image_url, genre } =
-      req.body;
+    const {
+      name,
+      number_of_episodes,
+      year_released,
+      plot,
+      image_url,
+      genre,
+      youtube_url,
+    } = req.body;
 
     const genreUpper = genre.toUpperCase();
 
@@ -39,8 +46,16 @@ const addKdrama = async (req, res) => {
     }
 
     await pool.query(
-      "INSERT INTO k_dramas (name, number_of_episodes, year_released, plot, image_url, genre_id) VALUES ($1, $2, $3, $4, $5, $6)",
-      [name, number_of_episodes, year_released, plot, image_url, genreId]
+      "INSERT INTO k_dramas (name, number_of_episodes, year_released, plot, image_url, genre_id, youtube_url) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+      [
+        name,
+        number_of_episodes,
+        year_released,
+        plot,
+        image_url,
+        genreId,
+        youtube_url,
+      ]
     );
 
     res.status(200).json({ status: "success", msg: "Kdrama added" });
