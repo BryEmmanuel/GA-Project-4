@@ -27,6 +27,7 @@ const HomePage = () => {
       if (res.ok) {
         const data = [...res.data];
         setKdramaCard(data);
+        console.log(kdramaCard);
       }
     } catch (error) {
       if (error.name !== "AbortError") {
@@ -57,6 +58,7 @@ const HomePage = () => {
               plot={kdrama.plot}
               image_url={kdrama.image_url}
               genre_id={kdrama.genre_id}
+              is_deleted={kdrama.is_deleted}
             ></Card>
           ))}
         </div>
