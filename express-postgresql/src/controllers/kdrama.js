@@ -114,7 +114,7 @@ const updateKdrama = async (req, res) => {
   }
 };
 
-// DELETE kdrama
+// DELETE kdrama - false delete
 const deleteKdrama = async (req, res) => {
   try {
     const { id } = req.params;
@@ -124,7 +124,9 @@ const deleteKdrama = async (req, res) => {
       [id]
     );
     if (kdramaExist.rows.length > 0) {
-      await pool.query("DELETE FROM k_dramas WHERE id = $1", [id]);
+      await pool.query("UPDATE k_dramas SET is_deleted = TRUE WHERE id = $1", [
+        id,
+      ]);
       res
         .status(200)
         .json({ status: "success", msg: "kdrama deleted successfully" });
