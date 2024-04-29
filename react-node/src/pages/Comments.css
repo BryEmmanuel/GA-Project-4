@@ -71,3 +71,21 @@ button::before {
 .dislike_icon {
   margin-left: 10px;
 }
+
+.individual_comments {
+  position: relative;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.x_button {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: #d30000;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
