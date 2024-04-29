@@ -66,6 +66,8 @@ const KdramaPage = () => {
     }
   };
 
+  // delete kdrama page
+
   useEffect(() => {
     getKdramaById();
     getKdramaDiscussionById();
@@ -117,6 +119,7 @@ const KdramaPage = () => {
       </div>
       <div className="buttons_container">
         <button onClick={() => setShowPostModal(true)}>Create a Post!</button>
+        {userCtx.role === "Admin" && <button>Delete Page</button>}
       </div>
     </>
   );
