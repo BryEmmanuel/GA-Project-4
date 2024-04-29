@@ -63,9 +63,8 @@ const Comments = () => {
       undefined
     );
     if (res.ok) {
-      const data = [...res.data];
+      const data = res.data.filter((comment) => comment.is_deleted === false);
       setComments(data);
-      console.log(data);
     }
   };
 
@@ -157,10 +156,25 @@ const Comments = () => {
     }
   };
 
+  // function to delete comments
+  const deleteComment = async (commentId) => {
+    const res = await fetchData(
+      "/comments/delete/" + commentId,
+      "DELETE",
+      undefined,
+      undefined
+    );
+    if (res.ok) {
+      setComments(comments.filter((comment) => comment.id !== id));
+    } else {
+      console.error("Failed to delete comment");
+    }
+  };
+
   useEffect(() => {
     getDiscussionById();
     getCommentsOfDiscussion();
-  }, [hasLiked, hasDisliked, hasCommented]);
+  }, [hasLiked, hasDisliked, hasCommented, comments]);
 
   return (
     <>
@@ -187,6 +201,7 @@ const Comments = () => {
               disabled={hasDisliked}
             />
           </button>
+
           {isInput ? (
             <form className="inputForm">
               <input
@@ -220,12 +235,23 @@ const Comments = () => {
           {[...comments]
             .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
             .map((comment, index) => (
-              <Comment
-                key={index}
-                contents={comment.contents}
-                created_at={timeAgo(new Date(comment.created_at))}
-                username={comment.username}
-              ></Comment>
+              <div className="individual_comments">
+                <Comment
+                  key={index}
+                  contents={comment.contents}
+                  created_at={timeAgo(new Date(comment.created_at))}
+                  username={comment.username}
+                  is_deleted={comment.is_deleted}
+                />
+                {userCtx.role === "Admin" && (
+                  <button
+                    className="x_button"
+                    onClick={() => deleteComment(comment.id)}
+                  >
+                    Delete
+                  </button>
+                )}
+              </div>
             ))
             .reverse()}
         </div>
