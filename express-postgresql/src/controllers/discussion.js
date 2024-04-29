@@ -16,7 +16,7 @@ const getKdramaDiscussion = async (req, res) => {
   try {
     const { name: kdramaName } = req.params;
     const specificKdramaDiscussion = await pool.query(
-      "SELECT discussion.id, discussion.title, discussion.number_of_likes, discussion.created_at, discussion.description, k_dramas.name AS k_drama_name, useraccount.username FROM discussion JOIN k_dramas ON discussion.k_drama_id = k_dramas.id JOIN useraccount ON discussion.user_id = useraccount.id WHERE k_dramas.name = $1",
+      "SELECT discussion.id, discussion.title, discussion.number_of_likes, discussion.created_at, discussion.description, discussion.is_deleted, k_dramas.name AS k_drama_name, useraccount.username FROM discussion JOIN k_dramas ON discussion.k_drama_id = k_dramas.id JOIN useraccount ON discussion.user_id = useraccount.id WHERE k_dramas.name = $1",
       [kdramaName]
     );
     res.json(specificKdramaDiscussion.rows);
@@ -75,7 +75,7 @@ const addDiscussion = async (req, res) => {
   }
 };
 
-// delete discussion
+// delete discussion - false delete
 const deleteDiscussion = async (req, res) => {
   try {
     const { id } = req.params;
@@ -85,7 +85,10 @@ const deleteDiscussion = async (req, res) => {
       [id]
     );
     if (discussionExist.rows.length > 0) {
-      await pool.query("DELETE FROM discussion WHERE id = $1", [id]);
+      await pool.query(
+        "UPDATE discussion SET is_deleted = TRUE WHERE id = $1",
+        [id]
+      );
       res.status(200).json({ status: "ok", msg: "discussion deleted" });
     } else {
       res.status(400).json({ status: "error", msg: "discussion not found" });
