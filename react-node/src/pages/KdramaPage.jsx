@@ -63,7 +63,9 @@ const KdramaPage = () => {
       undefined
     );
     if (res.ok) {
-      const data = [...res.data];
+      const data = res.data.filter(
+        (discussion) => discussion.is_deleted === false
+      );
       setKdramaPost(data);
     }
   };
@@ -130,6 +132,7 @@ const KdramaPage = () => {
                 description={post.description}
                 k_drama_name={post.k_drama_name}
                 username={post.username}
+                is_deleted={post.is_deleted}
               />
             </div>
           ))}
