@@ -104,3 +104,16 @@ UPDATE k_dramas
 SET youtube_url = 'embedId'
 WHERE id = $1;
 
+
+Admin - false delete for kdrama and discussion
+validations and protection of endpoints
+front end - admin and user view needs to be different
+
+ALTER TABLE k_dramas
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE discussion
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE comments
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
