@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./KdramaPage.css";
 import useFetch from "../hooks/useFetch";
 import PostModal from "../components/PostModal";
@@ -15,6 +15,8 @@ const KdramaPage = () => {
   const fetchData = useFetch();
   // useContext
   const userCtx = useContext(UserContext);
+  // useNavigate
+  const navigate = useNavigate();
 
   // states of the kdrama
   const [name, setName] = useState("");
@@ -67,6 +69,22 @@ const KdramaPage = () => {
   };
 
   // delete kdrama page
+  const deleteKdrama = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this K-drama page?"
+    );
+    if (confirmDelete) {
+      const res = await fetchData(
+        "/kdrama/deletekdrama/" + kdrama,
+        "DELETE",
+        undefined,
+        undefined
+      );
+      if (res.ok) {
+        navigate("/main");
+      }
+    }
+  };
 
   useEffect(() => {
     getKdramaById();
@@ -119,7 +137,15 @@ const KdramaPage = () => {
       </div>
       <div className="buttons_container">
         <button onClick={() => setShowPostModal(true)}>Create a Post!</button>
-        {userCtx.role === "Admin" && <button>Delete Page</button>}
+        {userCtx.role === "Admin" && (
+          <button
+            onClick={() => {
+              deleteKdrama();
+            }}
+          >
+            Delete Page
+          </button>
+        )}
       </div>
     </>
   );
