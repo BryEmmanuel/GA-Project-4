@@ -36,3 +36,13 @@
   color: #777;
   margin-top: 5px;
 }
+
+.delete_comment_button {
+  background-color: #d30000;
+  position: relative;
+  width: 100px;
+  left: 770px;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+}
