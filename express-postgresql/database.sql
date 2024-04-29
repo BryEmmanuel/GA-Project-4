@@ -95,3 +95,12 @@ ALTER TABLE discussion
 ADD COLUMN user_id INTEGER,
 ADD CONSTRAINT fk_discussion_useraccount
 FOREIGN KEY (user_id) REFERENCES useraccount(id);
+
+ALTER TABLE k_dramas
+ADD COLUMN youtube_url VARCHAR(255);
+
+
+UPDATE k_dramas
+SET youtube_url = 'embedId'
+WHERE id = $1;
+
