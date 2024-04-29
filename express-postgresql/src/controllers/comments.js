@@ -52,7 +52,7 @@ const getDiscussionComments = async (req, res) => {
   try {
     const { id } = req.params;
     const discussionComments = await pool.query(
-      "SELECT comments.id, comments.discussion_id, comments.user_id, comments.contents, comments.created_at, discussion.title, useraccount.username FROM comments JOIN discussion ON comments.discussion_id = discussion.id JOIN useraccount ON comments.user_id = useraccount.id WHERE discussion.id = $1",
+      "SELECT comments.id, comments.discussion_id, comments.user_id, comments.contents, comments.created_at, comments.is_deleted, discussion.title, useraccount.username FROM comments JOIN discussion ON comments.discussion_id = discussion.id JOIN useraccount ON comments.user_id = useraccount.id WHERE discussion.id = $1",
       [id]
     );
     res.json(discussionComments.rows);
@@ -64,7 +64,7 @@ const getDiscussionComments = async (req, res) => {
   }
 };
 
-// delete comment
+// delete comment - false delete
 const deleteComment = async (req, res) => {
   try {
     const { id } = req.params;
@@ -74,7 +74,9 @@ const deleteComment = async (req, res) => {
       [id]
     );
     if (commentExists.rows.length > 0) {
-      await pool.query("DELETE FROM comments WHERE id = $1", [id]);
+      await pool.query("UPDATE comments SET is_deleted = TRUE WHERE id = $1", [
+        id,
+      ]);
       res.status(200).json({ status: "ok", msg: "comment deleted" });
     } else {
       res.status(400).json({ status: "error", msg: "unable to find comment" });
