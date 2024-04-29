@@ -24,6 +24,7 @@ const KdramaPage = () => {
   const [image, setImage] = useState("");
   const [genre, setGenre] = useState("");
   const [kdramaid, setKdramaid] = useState("");
+  const [kdramaEmbed, setKdramaEmbed] = useState("");
 
   // track state of new post modal
   const [showPostModal, setShowPostModal] = useState(false);
@@ -47,6 +48,7 @@ const KdramaPage = () => {
       setImage(res.data[0].image_url);
       setGenre(res.data[0].genre_name);
       setKdramaid(res.data[0].id);
+      setKdramaEmbed(res.data[0].youtube_url);
     }
   };
 
@@ -75,7 +77,7 @@ const KdramaPage = () => {
       <div className="kdrama_page_container">
         <div className="kdrama_card">
           <div className="kdrama_trailer">
-            <YoutubeEmbed embedId="Gg2D8zrzlOA" />
+            <YoutubeEmbed embedId={kdramaEmbed} />
           </div>
           <img src={image} className="kdrama_image"></img>
           <div className="kdrama_details">
