@@ -6,6 +6,7 @@ import PostModal from "../components/PostModal";
 import Post from "../components/Post";
 import Navbar from "../components/Navbar";
 import UserContext from "../context/user";
+import YoutubeEmbed from "../components/YoutubeEmbed";
 
 const KdramaPage = () => {
   // useParams
@@ -73,7 +74,9 @@ const KdramaPage = () => {
 
       <div className="kdrama_page_container">
         <div className="kdrama_card">
-          <div className="kdrama_trailer">TRAILER</div>
+          <div className="kdrama_trailer">
+            <YoutubeEmbed embedId="Gg2D8zrzlOA" />
+          </div>
           <img src={image} className="kdrama_image"></img>
           <div className="kdrama_details">
             <h2>{name}</h2>
