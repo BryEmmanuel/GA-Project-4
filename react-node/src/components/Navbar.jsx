@@ -1,16 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/user";
 import { CgProfile } from "react-icons/cg";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaPlus } from "react-icons/fa6";
+import useFetch from "../hooks/useFetch";
 
 const Navbar = () => {
   // useContext
   const userCtx = useContext(UserContext);
   // useNavigate
   const navigate = useNavigate();
+  // useFetch
+  const fetchData = useFetch();
+
+  // state to track all kdramas
+  const [allKdramas, setAllKdramas] = useState([]);
+  // state to track displayed kdramas
+  const [displayedKdrama, setDisplayedKdrama] = useState([]);
+
   // logout
   const handleLogout = () => {
     localStorage.clear("refresh");
@@ -22,6 +31,28 @@ const Navbar = () => {
   const goToUploadPage = () => {
     navigate("/upload");
   };
+
+  // get all kdramas
+  const getAllKdrama = async () => {
+    const res = await fetchData(
+      "/kdrama/getkdrama",
+      "GET",
+      undefined,
+      undefined
+    );
+    if (res.ok) {
+      // only require the names for searching
+      const kdramaNames = res.data.map((kdrama) => kdrama.name);
+      console.log(kdramaNames);
+      setAllKdramas(kdramaNames);
+    }
+  };
+
+  // function to handle searching of kdramas
+
+  useEffect(() => {
+    getAllKdrama();
+  }, []);
 
   return (
     <>
