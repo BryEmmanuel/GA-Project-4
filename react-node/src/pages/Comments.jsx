@@ -147,6 +147,7 @@ const Comments = () => {
     );
     if (res.ok) {
       setCommentContents("");
+      toggleButtonInput();
       if (hasCommented === false) {
         setHasCommented(true);
       } else {
