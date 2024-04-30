@@ -180,6 +180,39 @@ const Comments = () => {
     }
   };
 
+  // function to delete own comments as user
+  const deleteOwnComments = async (commentId) => {
+    console.log(commentId);
+    console.log(userCtx.accessToken);
+    const res = await fetchData(
+      "/comments/" + commentId,
+      "GET",
+      undefined,
+      userCtx.accessToken
+    );
+    if (res.ok) {
+      const comment = res.data;
+      // compare user_id of comment with current user's id
+      if (comment[0].user_id === userCtx.userId) {
+        const deleteRes = await fetchData(
+          "/comments/delete/" + commentId,
+          "DELETE",
+          undefined,
+          userCtx.accessToken
+        );
+        if (deleteRes.ok) {
+          setComments(comments.filter((comment) => comment.id !== commentId));
+        } else {
+          console.error("failed to delete comment");
+        }
+      } else {
+        console.error("you can only delete your own comments");
+      }
+    } else {
+      console.error("failed to get comment");
+    }
+  };
+
   useEffect(() => {
     getDiscussionById();
     getCommentsOfDiscussion();
@@ -254,6 +287,8 @@ const Comments = () => {
                   username={comment.username}
                   is_deleted={comment.is_deleted}
                   user_id={comment.user_id}
+                  id={comment.id}
+                  deleteOwnComments={deleteOwnComments}
                 />
                 {userCtx.role === "Admin" && (
                   <button
