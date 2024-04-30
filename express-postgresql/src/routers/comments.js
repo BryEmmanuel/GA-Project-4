@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/new", authUser, createComment);
 router.get("/all", authUser, getAllComments);
 router.get("/:id", authUser, getCommentById);
-router.delete("/delete/:id", authAdmin, deleteComment);
+router.delete("/delete/:id", authUser, deleteComment);
 router.patch("/:id", authAdmin, updateComment);
 router.put("/discussion/:id", authUser, getDiscussionComments);
 
