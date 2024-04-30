@@ -9,15 +9,16 @@ const {
   increaseLikes,
   decreaseLikes,
 } = require("../controllers/discussion");
+const { authUser, authAdmin } = require("../middleware/auth");
 const router = express.Router();
 
-router.get("/getdiscussion", getAllDiscussion);
-router.post("/adddiscussion", addDiscussion);
-router.delete("/deletediscussion/:id", deleteDiscussion);
-router.patch("/updatediscussion/:id", updateDiscussion);
-router.get("/getkdramadiscussion/:name", getKdramaDiscussion);
-router.put("/getspecificdiscussion/:id", getSpecificDiscussion);
-router.patch("/increaselikes/:id", increaseLikes);
-router.patch("/decreaselikes/:id", decreaseLikes);
+router.get("/getdiscussion", authUser, getAllDiscussion);
+router.post("/adddiscussion", authUser, addDiscussion);
+router.delete("/deletediscussion/:id", authAdmin, deleteDiscussion);
+router.patch("/updatediscussion/:id", authAdmin, updateDiscussion);
+router.get("/getkdramadiscussion/:name", authUser, getKdramaDiscussion);
+router.put("/getspecificdiscussion/:id", authUser, getSpecificDiscussion);
+router.patch("/increaselikes/:id", authUser, increaseLikes);
+router.patch("/decreaselikes/:id", authUser, decreaseLikes);
 
 module.exports = router;
