@@ -38,6 +38,9 @@ const Comments = () => {
   // track state of commented
   const [hasCommented, setHasCommented] = useState(false);
 
+  // tract state of deletion
+  const [deleted, setDeleted] = useState(false);
+
   // get specific discussion
   const getDiscussionById = async () => {
     const res = await fetchData(
@@ -167,6 +170,11 @@ const Comments = () => {
     );
     if (res.ok) {
       setComments(comments.filter((comment) => comment.id !== id));
+      if (deleted === false) {
+        setDeleted(true);
+      } else {
+        setDeleted(false);
+      }
     } else {
       console.error("Failed to delete comment");
     }
@@ -175,7 +183,8 @@ const Comments = () => {
   useEffect(() => {
     getDiscussionById();
     getCommentsOfDiscussion();
-  }, [hasLiked, hasDisliked, hasCommented, comments]);
+  }, [hasLiked, hasDisliked, hasCommented, deleted]);
+  // add hasCommented, comments deleted comments
 
   return (
     <>
