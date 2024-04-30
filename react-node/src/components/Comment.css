@@ -46,3 +46,15 @@
   border: none;
   padding: 5px 10px;
 }
+
+.user_delete_text {
+  font-size: 12px;
+  color: #777;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+.user_delete_text:hover {
+  color: rgb(255, 0, 0);
+}
