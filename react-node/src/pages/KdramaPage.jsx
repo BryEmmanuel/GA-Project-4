@@ -40,7 +40,7 @@ const KdramaPage = () => {
       "/kdrama/getkdrama/" + kdrama,
       "GET",
       undefined,
-      undefined
+      userCtx.accessToken
     );
     if (res.ok) {
       setName(res.data[0].name);
@@ -60,7 +60,7 @@ const KdramaPage = () => {
       "/discussion/getkdramadiscussion/" + kdrama,
       "GET",
       undefined,
-      undefined
+      userCtx.accessToken
     );
     if (res.ok) {
       const data = res.data.filter(
@@ -80,7 +80,7 @@ const KdramaPage = () => {
         "/kdrama/deletekdrama/" + kdrama,
         "DELETE",
         undefined,
-        undefined
+        userCtx.accessToken
       );
       if (res.ok) {
         navigate("/main");
