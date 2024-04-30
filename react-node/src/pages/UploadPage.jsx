@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
+import "./UploadPage.css";
 
 const UploadPage = () => {
   // useFetch
@@ -48,7 +49,7 @@ const UploadPage = () => {
   };
 
   return (
-    <div>
+    <div className="form_container">
       <form onSubmit={handleSubmit}>
         <label>
           Name:
@@ -63,9 +64,17 @@ const UploadPage = () => {
           Number of Episodes:
           <input
             style={{ color: "black" }}
+            min="0"
             type="number"
             value={numberOfEpisodes}
-            onChange={(e) => setNumberOfEpisodes(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value < 0) {
+                setNumberOfEpisodes(0);
+              } else {
+                setNumberOfEpisodes(value);
+              }
+            }}
           />
         </label>
         <label>
@@ -113,7 +122,7 @@ const UploadPage = () => {
           </select>
         </label>
         <label>
-          Video URL:
+          Embed ID:
           <input
             style={{ color: "black" }}
             type="text"
