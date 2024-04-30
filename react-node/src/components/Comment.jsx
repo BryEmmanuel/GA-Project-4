@@ -15,7 +15,12 @@ const Comment = (props) => {
             <div className="content">{props.contents}</div>
             <div className="time">{props.created_at}</div>
             {userCtx.userId === props.user_id && (
-              <span className="user_delete_text">Delete</span>
+              <span
+                className="user_delete_text"
+                onClick={() => props.deleteOwnComments(props.id)}
+              >
+                Delete
+              </span>
             )}
           </div>
         </div>
