@@ -47,7 +47,7 @@ const Comments = () => {
       "/discussion/getspecificdiscussion/" + id,
       "PUT",
       undefined,
-      undefined
+      userCtx.accessToken
     );
     if (res.ok) {
       setPostTitle(res.data[0].title);
@@ -63,7 +63,7 @@ const Comments = () => {
       "/comments/discussion/" + id,
       "PUT",
       undefined,
-      undefined
+      userCtx.accessToken
     );
     if (res.ok) {
       const data = res.data.filter((comment) => comment.is_deleted === false);
@@ -105,7 +105,7 @@ const Comments = () => {
         "/discussion/increaselikes/" + id,
         "PATCH",
         undefined,
-        undefined
+        userCtx.accessToken
       );
       if (res.ok) {
         setHasLiked(true);
@@ -121,7 +121,7 @@ const Comments = () => {
         "/discussion/decreaselikes/" + id,
         "PATCH",
         undefined,
-        undefined
+        userCtx.accessToken
       );
       if (res.ok) {
         setHasDisliked(true);
@@ -146,7 +146,7 @@ const Comments = () => {
         user_id: userCtx.userId,
         contents: commentContents,
       },
-      undefined
+      userCtx.accessToken
     );
     if (res.ok) {
       setCommentContents("");
@@ -166,7 +166,7 @@ const Comments = () => {
       "/comments/delete/" + commentId,
       "DELETE",
       undefined,
-      undefined
+      userCtx.accessToken
     );
     if (res.ok) {
       setComments(comments.filter((comment) => comment.id !== id));
@@ -183,6 +183,7 @@ const Comments = () => {
   useEffect(() => {
     getDiscussionById();
     getCommentsOfDiscussion();
+    console.log(userCtx);
   }, [hasLiked, hasDisliked, hasCommented, deleted]);
   // add hasCommented, comments deleted comments
 
@@ -252,6 +253,7 @@ const Comments = () => {
                   created_at={timeAgo(new Date(comment.created_at))}
                   username={comment.username}
                   is_deleted={comment.is_deleted}
+                  user_id={comment.user_id}
                 />
                 {userCtx.role === "Admin" && (
                   <button
