@@ -22,7 +22,7 @@ const Discussion = () => {
         "/discussion/getdiscussion",
         "GET",
         undefined,
-        undefined
+        userCtx.accessToken
       );
       if (res.ok) {
         const data = res.data.filter(
@@ -43,7 +43,7 @@ const Discussion = () => {
       "/discussion/deletediscussion/" + id,
       "DELETE",
       undefined,
-      undefined
+      userCtx.accessToken
     );
     if (res.ok) {
       // Remove the deleted discussion from the state
