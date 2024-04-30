@@ -30,12 +30,12 @@
 .kdrama_image {
   border-radius: 5px;
   width: 100%;
-  height: auto; /* Adjust as needed */
+  height: auto;
 }
 
 .kdrama_details {
   padding: 20px;
-  flex-grow: 1; /* Take up remaining space */
+  flex-grow: 1;
 }
 
 .kdrama_discussion_container {
