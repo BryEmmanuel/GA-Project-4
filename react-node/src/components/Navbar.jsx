@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/user";
@@ -14,6 +14,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   // useFetch
   const fetchData = useFetch();
+  // useRef
+  const searchKdramaRef = useRef();
 
   // state to track all kdramas
   const [allKdramas, setAllKdramas] = useState([]);
@@ -34,25 +36,54 @@ const Navbar = () => {
 
   // get all kdramas
   const getAllKdrama = async () => {
-    const res = await fetchData(
-      "/kdrama/getkdrama",
-      "GET",
-      undefined,
-      undefined
-    );
-    if (res.ok) {
-      // only require the names for searching
-      const kdramaNames = res.data.map((kdrama) => kdrama.name);
-      console.log(kdramaNames);
-      setAllKdramas(kdramaNames);
+    try {
+      const res = await fetchData(
+        "/kdrama/getkdrama",
+        "GET",
+        undefined,
+        undefined
+      );
+      if (res.ok) {
+        // only require the names for searching
+        const kdramaNames = res.data.map((kdrama) => kdrama.name);
+        console.log(kdramaNames);
+        setAllKdramas(kdramaNames);
+      }
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        console.error(error.message);
+      }
     }
   };
 
   // function to handle searching of kdramas
+  const handleSearchBar = async () => {
+    if (searchKdramaRef.current.value.length > 0) {
+      const tempArray = [...allKdramas];
+      const filterSearch = tempArray.filter((kdrama) =>
+        kdrama
+          .toLowerCase()
+          .includes(searchKdramaRef.current.value.toLowerCase())
+      );
+      const sortedFilterSearch = filterSearch.sort((a, b) =>
+        a.localeCompare(b)
+      );
+      setDisplayedKdrama(sortedFilterSearch);
+    } else {
+      setDisplayedKdrama([]);
+    }
+  };
+
+  // function to reset search bar
+  const resetSearchBar = () => {
+    searchKdramaRef.current.value = "";
+    handleSearchBar();
+  };
 
   useEffect(() => {
+    console.log(displayedKdrama);
     getAllKdrama();
-  }, []);
+  }, [displayedKdrama]);
 
   return (
     <>
@@ -67,7 +98,31 @@ const Navbar = () => {
             </Link>
 
             <div className="searchbar_container">
-              <input className="searchbar" placeholder="Search"></input>
+              <input
+                className="searchbar"
+                placeholder="Search"
+                ref={searchKdramaRef}
+                style={{ color: "black" }}
+                onKeyUp={() => {
+                  handleSearchBar();
+                }}
+                onBlur={() => {
+                  {
+                    setTimeout(resetSearchBar, 100);
+                  }
+                }}
+              ></input>
+              <div className="dropdown">
+                {displayedKdrama.map((kdrama, index) => (
+                  <Link
+                    to={`/main/${kdrama}`}
+                    key={index}
+                    className="dropdown-item"
+                  >
+                    {kdrama}
+                  </Link>
+                ))}
+              </div>
             </div>
             <div className="logout">
               <CgProfile style={{ margin: 6 }} />
@@ -98,7 +153,31 @@ const Navbar = () => {
             </Link>
 
             <div className="searchbar_container">
-              <input className="searchbar" placeholder="Search"></input>
+              <input
+                className="searchbar"
+                placeholder="Search"
+                ref={searchKdramaRef}
+                style={{ color: "black" }}
+                onKeyUp={() => {
+                  handleSearchBar();
+                }}
+                onBlur={() => {
+                  {
+                    setTimeout(resetSearchBar, 100);
+                  }
+                }}
+              ></input>
+              <div className="dropdown">
+                {displayedKdrama.map((kdrama, index) => (
+                  <Link
+                    to={`/main/${kdrama}`}
+                    key={index}
+                    className="dropdown-item"
+                  >
+                    {kdrama}
+                  </Link>
+                ))}
+              </div>
             </div>
             <div className="logout">
               <FaPlus
