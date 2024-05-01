@@ -27,7 +27,6 @@ const HomePage = () => {
       if (res.ok) {
         const data = [...res.data];
         setKdramaCard(data);
-        console.log(kdramaCard);
       }
     } catch (error) {
       if (error.name !== "AbortError") {
