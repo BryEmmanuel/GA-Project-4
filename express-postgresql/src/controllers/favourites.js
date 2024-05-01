@@ -29,5 +29,21 @@ const addFavourites = async (req, res) => {
 };
 
 // get favourites of a user
+const getFavouritesOfUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    console.log(`Extracted userId: ${userId}`);
+    const favouritesOfUser = await pool.query(
+      "SELECT k_dramas.* , favorites.*, useraccount.username FROM k_dramas JOIN favorites ON k_dramas.id = favorites.kdrama_id JOIN useraccount ON favorites.user_id = useraccount.id WHERE favorites.user_id = $1",
+      [userId]
+    );
+    res.json(favouritesOfUser.rows);
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "failed to get favourites of user" });
+  }
+};
 
-module.exports = { addFavourites };
+module.exports = { addFavourites, getFavouritesOfUser };
