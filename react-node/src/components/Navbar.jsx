@@ -36,12 +36,13 @@ const Navbar = () => {
 
   // get all kdramas
   const getAllKdrama = async () => {
+    console.log(userCtx);
     try {
       const res = await fetchData(
         "/kdrama/getkdrama",
         "GET",
         undefined,
-        undefined
+        userCtx.accessToken
       );
       if (res.ok) {
         // only require the names for searching
