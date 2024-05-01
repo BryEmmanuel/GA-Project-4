@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import "./Comments.css";
-import Navbar from "../components/Navbar";
 import Comment from "../components/Comment";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
@@ -222,7 +221,6 @@ const Comments = () => {
 
   return (
     <>
-      <Navbar></Navbar>
       <div className="post_container">
         <div className="post_header">
           <h6>{postUsername}</h6>
