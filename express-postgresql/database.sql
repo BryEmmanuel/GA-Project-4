@@ -1,3 +1,5 @@
+-- All the queries I wrote for this project
+
 CREATE DATABASE kdrama;
 
 CREATE TABLE useraccount(
@@ -105,10 +107,6 @@ SET youtube_url = 'embedId'
 WHERE id = $1;
 
 
-Admin - false delete for kdrama and discussion
-validations and protection of endpoints
-front end - admin and user view needs to be different
-
 ALTER TABLE k_dramas
 ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
 
@@ -117,3 +115,19 @@ ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
 
 ALTER TABLE comments
 ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+
+CREATE TABLE favorites(
+    user_id INT NOT NULL,
+    kdrama_id INT NOT NULL,
+    PRIMARY KEY (user_id, kdrama_id),
+    FOREIGN KEY (user_id) REFERENCES useraccount(id),
+    FOREIGN KEY (kdrama_id) REFERENCES k_dramas(id) 
+);
+
+ALTER TABLE favorites 
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE favorites 
+RENAME COLUMN is_deleted TO is_favorited;
+
