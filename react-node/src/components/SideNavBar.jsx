@@ -10,14 +10,8 @@ import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../context/user";
 
-const navItems = ["Home", "Discussion", "Favourites", "Profile", "Logout"];
-const navIcons = [
-  <IoMdHome />,
-  <BiConversation />,
-  <FaHeart />,
-  <IoPerson />,
-  <BiLogOut />,
-];
+const navItems = ["Home", "Discussion", "Favourites", "Logout"];
+const navIcons = [<IoMdHome />, <BiConversation />, <FaHeart />, <BiLogOut />];
 
 const SideNavBar = () => {
   // use Navigate
@@ -35,9 +29,6 @@ const SideNavBar = () => {
         break;
       case "Favourites":
         navigate("/favourites");
-        break;
-      case "Profile":
-        navigate("/profile");
         break;
       case "Logout":
         const handleLogout = () => {
