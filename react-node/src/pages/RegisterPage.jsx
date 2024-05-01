@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import Navbar from "../components/Navbar";
+
 import { Link, useNavigate } from "react-router-dom";
 import "./RegisterPage.css";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
-import LoginPage from "./LoginPage";
+
 import { jwtDecode } from "jwt-decode";
 
 const RegisterPage = () => {
@@ -95,7 +95,6 @@ const RegisterPage = () => {
   };
   return (
     <>
-      <Navbar></Navbar>
       <div className="register_container">
         <form
           onSubmit={(e) => {

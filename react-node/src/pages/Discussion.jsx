@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import Post from "../components/Post";
-import Navbar from "../components/Navbar";
 import "./Discussion.css";
 import UserContext from "../context/user";
 
@@ -59,7 +58,6 @@ const Discussion = () => {
 
   return (
     <>
-      <Navbar></Navbar>
       <div className="kdrama_discussion_container">
         <div className="kdrama_discussion_post">
           {discussions.map((post, index) => (

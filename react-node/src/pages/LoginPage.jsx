@@ -3,7 +3,6 @@ import useFetch from "../hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
 import UserContext from "../context/user";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import "./LoginPage.css";
 
 const LoginPage = () => {
@@ -49,7 +48,6 @@ const LoginPage = () => {
 
   return (
     <>
-      <Navbar></Navbar>
       <div className="login_container">
         <form
           onSubmit={(e) => {

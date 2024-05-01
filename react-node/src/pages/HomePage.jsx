@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./HomePage.css";
-import Navbar from "../components/Navbar";
 import SideNavBar from "../components/SideNavBar";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
@@ -22,7 +21,7 @@ const HomePage = () => {
         "/kdrama/getkdrama",
         "GET",
         undefined,
-        undefined
+        userCtx.accessToken
       );
       if (res.ok) {
         const data = [...res.data];
@@ -38,11 +37,11 @@ const HomePage = () => {
   useEffect(() => {
     displayKdrama();
     console.log(userCtx.role);
+    console.log(userCtx.userId);
   }, []);
 
   return (
     <>
-      <Navbar></Navbar>
       <div className="mainpage_container">
         <SideNavBar></SideNavBar>
 

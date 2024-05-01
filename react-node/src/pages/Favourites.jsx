@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
 import useFetch from "../hooks/useFetch";
 import UserContext from "../context/user";
 import Card from "../components/Card";
@@ -44,7 +43,6 @@ const Favourites = () => {
 
   return (
     <>
-      <Navbar></Navbar>
       <div className="main_container">
         {filteredFavouritedKdramas.map((kdrama, index) => (
           <div className="favourites_page_container">
