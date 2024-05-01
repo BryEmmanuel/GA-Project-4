@@ -4,7 +4,6 @@ import "./KdramaPage.css";
 import useFetch from "../hooks/useFetch";
 import PostModal from "../components/PostModal";
 import Post from "../components/Post";
-import Navbar from "../components/Navbar";
 import UserContext from "../context/user";
 import YoutubeEmbed from "../components/YoutubeEmbed";
 import { FcLike } from "react-icons/fc";
@@ -61,6 +60,7 @@ const KdramaPage = () => {
 
   // get discussions of the specific kdrama
   const getKdramaDiscussionById = async () => {
+    console.log(userCtx.accessToken);
     const res = await fetchData(
       "/discussion/getkdramadiscussion/" + kdrama,
       "GET",
@@ -104,6 +104,7 @@ const KdramaPage = () => {
       );
       if (res.ok) {
         setFavouritedKdramas(true);
+        fetchUserFavourites();
         alert("favourited");
       } else {
         console.log("error , failed to favourite kdrama");
@@ -123,11 +124,9 @@ const KdramaPage = () => {
         userCtx.accessToken
       );
       if (res.ok) {
-        console.log(favouritedKdramas);
         setFavouritedKdramas(false);
-        console.log(favouritedKdramas);
+        fetchUserFavourites();
         alert("unfavourited");
-        console.log(favouritedKdramas);
       } else {
         console.log("error, failed to unfavourite kdrama");
       }
@@ -146,12 +145,13 @@ const KdramaPage = () => {
       userCtx.accessToken
     );
     if (res.ok) {
-      console.log(res.data);
       const userFavourites = res.data;
+
       // Check if the current K-drama is in the user's favorites list
       const isFavorited = userFavourites.some(
         (fav) => fav.kdrama_id === kdramaid
       );
+      console.log(isFavorited);
       setFavouritedKdramas(isFavorited);
     }
   };
@@ -160,14 +160,14 @@ const KdramaPage = () => {
     getKdramaById();
     getKdramaDiscussionById();
     fetchUserFavourites();
-    if (!favouritedKdramas) {
-      console.log("K-drama has been unfavorited");
-    }
-  }, [favouritedKdramas, kdramaid]);
+  }, [kdramaid]);
+
+  useEffect(() => {
+    fetchUserFavourites();
+  }, [favouritedKdramas]);
+
   return (
     <>
-      <Navbar></Navbar>
-
       <div className="kdrama_page_container">
         <div className="kdrama_card">
           <div className="kdrama_trailer">
