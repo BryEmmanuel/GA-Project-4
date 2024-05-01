@@ -5,13 +5,13 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import KdramaPage from "./pages/KdramaPage";
 import Discussion from "./pages/Discussion";
-import Profile from "./pages/Profile";
 import useFetch from "./hooks/useFetch";
 import UserContext from "./context/user";
 import { jwtDecode } from "jwt-decode";
 import Favourites from "./pages/Favourites";
 import Comments from "./pages/Comments";
 import UploadPage from "./pages/UploadPage";
+import Navbar from "./components/Navbar";
 
 function App() {
   // track state of account
@@ -70,6 +70,7 @@ function App() {
           setUserId,
         }}
       >
+        <Navbar></Navbar>
         <Routes>
           <Route path="/" element={<Navigate replace to="/main" />}></Route>
           <Route path="main" element={<HomePage />}></Route>
@@ -79,7 +80,6 @@ function App() {
           <Route path="discussion" element={<Discussion />}></Route>
           <Route path="discussion/comments/:id" element={<Comments />}></Route>
           <Route path="upload" element={<UploadPage />}></Route>
-          <Route path="profile" element={<Profile />}></Route>
           <Route path="favourites" element={<Favourites />}></Route>
         </Routes>
       </UserContext.Provider>
