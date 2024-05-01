@@ -20,6 +20,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
+  const [userId, setUserId] = useState("");
   // track state of empty field
   const [errorMessage, setErrorMessage] = useState("");
   // track state of invalid email
@@ -76,6 +77,7 @@ const RegisterPage = () => {
       const decoded = jwtDecode(res.data.access);
       userCtx.setUsername(decoded.username);
       userCtx.setRole(decoded.role);
+      userCtx.setUserId(decoded.user_id);
 
       navigate("/main");
     } else {
