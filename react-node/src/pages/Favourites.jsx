@@ -37,24 +37,32 @@ const Favourites = () => {
     displayFavouriteKdramas();
   }, []);
 
+  // Filter userFavouritedKdramas to only include those with is_favorited === true
+  const filteredFavouritedKdramas = userFavouritedKdramas.filter(
+    (kdrama) => kdrama.is_favorited === true
+  );
+
   return (
     <>
       <Navbar></Navbar>
-      {userFavouritedKdramas.map((kdrama, index) => (
-        <div className="favourites_page_container">
-          <Card
-            id={kdrama.id}
-            key={index}
-            name={kdrama.name}
-            number_of_episodes={kdrama.number_of_episodes}
-            year_released={kdrama.year_released}
-            plot={kdrama.plot}
-            image_url={kdrama.image_url}
-            genre_id={kdrama.genre_id}
-            is_deleted={kdrama.is_deleted}
-          ></Card>
-        </div>
-      ))}
+      <div className="main_container">
+        {filteredFavouritedKdramas.map((kdrama, index) => (
+          <div className="favourites_page_container">
+            <Card
+              id={kdrama.id}
+              key={index}
+              name={kdrama.name}
+              number_of_episodes={kdrama.number_of_episodes}
+              year_released={kdrama.year_released}
+              plot={kdrama.plot}
+              image_url={kdrama.image_url}
+              genre_id={kdrama.genre_id}
+              is_deleted={kdrama.is_deleted}
+              is_favorited={kdrama.is_favorited}
+            ></Card>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
