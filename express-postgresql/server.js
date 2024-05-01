@@ -5,6 +5,7 @@ const auth = require("./src/routers/auth");
 const kdrama = require("./src/routers/kdrama");
 const discussion = require("./src/routers/discussion");
 const comments = require("./src/routers/comments");
+const favourites = require("./src/routers/favourites");
 
 const cors = require("cors");
 const helmet = require("helmet");
@@ -30,6 +31,7 @@ app.use("/auth", auth);
 app.use("/kdrama", kdrama);
 app.use("/discussion", discussion);
 app.use("/comments", comments);
+app.use("/favourites", favourites);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
