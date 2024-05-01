@@ -7,6 +7,7 @@ import Post from "../components/Post";
 import Navbar from "../components/Navbar";
 import UserContext from "../context/user";
 import YoutubeEmbed from "../components/YoutubeEmbed";
+import { FcLike } from "react-icons/fc";
 
 const KdramaPage = () => {
   // useParams
@@ -33,6 +34,9 @@ const KdramaPage = () => {
 
   // track state of kdrama post
   const [kdramaPost, setKdramaPost] = useState([]);
+
+  // track state of favourited kdrama
+  const [favouritedKdramas, setFavouritedKdramas] = useState(false);
 
   // get specific kdrama
   const getKdramaById = async () => {
@@ -88,6 +92,25 @@ const KdramaPage = () => {
     }
   };
 
+  // function to favourite kdrama
+  const favouriteKdrama = async () => {
+    try {
+      const res = await fetchData(
+        "/favourites/addfavourites",
+        "POST",
+        { userId: userCtx.userId, kdramaId: kdramaid },
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        setFavouritedKdramas(true);
+      } else {
+        console.log("error , failed to favourite kdrama");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     getKdramaById();
     getKdramaDiscussionById();
@@ -140,6 +163,9 @@ const KdramaPage = () => {
       </div>
       <div className="buttons_container">
         <button onClick={() => setShowPostModal(true)}>Create a Post!</button>
+        <button onClick={() => favouriteKdrama()}>
+          <FcLike />
+        </button>
         {userCtx.role === "Admin" && (
           <button
             onClick={() => {
