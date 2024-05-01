@@ -193,21 +193,23 @@ const KdramaPage = () => {
       </div>
       <div className="kdrama_discussion_container">
         <div className="kdrama_discussion_post">
-          {kdramaPost.map((post, index) => (
-            <div className="kdrama_individual_post">
-              <Post
-                key={index}
-                id={post.id}
-                title={post.title}
-                number_of_likes={post.number_of_likes}
-                created_at={post.created_at}
-                description={post.description}
-                k_drama_name={post.k_drama_name}
-                username={post.username}
-                is_deleted={post.is_deleted}
-              />
-            </div>
-          ))}
+          {kdramaPost
+            .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+            .map((post, index) => (
+              <div className="kdrama_individual_post">
+                <Post
+                  key={index}
+                  id={post.id}
+                  title={post.title}
+                  number_of_likes={post.number_of_likes}
+                  created_at={post.created_at}
+                  description={post.description}
+                  k_drama_name={post.k_drama_name}
+                  username={post.username}
+                  is_deleted={post.is_deleted}
+                />
+              </div>
+            ))}
         </div>
       </div>
       <div className="buttons_container">
