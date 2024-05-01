@@ -13,7 +13,9 @@ const Overlay = (props) => {
   // useContext
   const userCtx = useContext(UserContext);
 
-  const addNewDiscussion = async () => {
+  const addNewDiscussion = async (e) => {
+    e.preventDefault();
+    console.log("add new discussion", userCtx.userId);
     try {
       const res = await fetchData(
         "/discussion/adddiscussion",
@@ -24,7 +26,7 @@ const Overlay = (props) => {
           k_drama_id: props.kdramaid,
           user_id: userCtx.userId,
         },
-        undefined
+        userCtx.accessToken
       );
       if (res.ok) {
         props.getKdramaDiscussionById();
