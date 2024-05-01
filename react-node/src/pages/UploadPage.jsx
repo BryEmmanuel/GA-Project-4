@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 import "./UploadPage.css";
+import UserContext from "../context/user";
 
 const UploadPage = () => {
   // useFetch
   const fetchData = useFetch();
   // useNavigate
   const navigate = useNavigate();
+  // useContext
+  const userCtx = useContext(UserContext);
 
   const [name, setName] = useState("");
   const [numberOfEpisodes, setNumberOfEpisodes] = useState("");
@@ -32,7 +35,7 @@ const UploadPage = () => {
         genre: genre,
         youtube_url: videoUrl,
       },
-      undefined
+      userCtx.accessToken
     );
     if (res.ok) {
       navigate("/main");
