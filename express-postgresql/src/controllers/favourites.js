@@ -4,9 +4,9 @@ const pool = require("../db/db");
 const addFavourites = async (req, res) => {
   try {
     const { userId, kdramaId } = req.body;
-    // check if favourites exist AND NOT deleted
+    // check if favourites exist AND favorited
     const favouriteExist = await pool.query(
-      "SELECT * FROM favorites WHERE user_id = $1 AND kdrama_id = $2 AND is_deleted = FALSE",
+      "SELECT * FROM favorites WHERE user_id = $1 AND kdrama_id = $2 AND is_favorited = TRUE",
       [userId, kdramaId]
     );
     if (favouriteExist.rows.length > 0) {
@@ -14,15 +14,15 @@ const addFavourites = async (req, res) => {
         .status(400)
         .json({ status: "error", msg: "kdrama already favourited" });
     }
-    // check if favourites exist AND IS deleted
+    // check if favourites exist AND IS NOT favorited
     const favouriteDeleted = await pool.query(
-      "SELECT * FROM favorites WHERE user_id = $1 AND kdrama_id = $2 AND is_deleted = TRUE",
+      "SELECT * FROM favorites WHERE user_id = $1 AND kdrama_id = $2 AND is_favorited = FALSE",
       [userId, kdramaId]
     );
     if (favouriteDeleted.rows.length > 0) {
-      // if it's deleted, change to to undeleted
+      // if it's NOT favorited, change to favorited
       await pool.query(
-        "UPDATE favorites SET is_deleted = FALSE WHERE user_id = $1 AND kdrama_id = $2",
+        "UPDATE favorites SET is_favorited = TRUE WHERE user_id = $1 AND kdrama_id = $2",
         [userId, kdramaId]
       );
       return res
@@ -48,7 +48,7 @@ const removeFavourites = async (req, res) => {
   try {
     const { userId, kdramaId } = req.body;
     await pool.query(
-      "UPDATE favorites SET is_deleted = TRUE WHERE user_id = $1 AND kdrama_id = $2",
+      "UPDATE favorites SET is_favorited = FALSE WHERE user_id = $1 AND kdrama_id = $2",
       [userId, kdramaId]
     );
     res.status(200).json({ status: "success", msg: "kdrama unfavourited" });
@@ -66,7 +66,7 @@ const getFavouritesOfUser = async (req, res) => {
     const { userId } = req.params;
     console.log(`Extracted userId: ${userId}`);
     const favouritesOfUser = await pool.query(
-      "SELECT k_dramas.* , favorites.*, useraccount.username FROM k_dramas JOIN favorites ON k_dramas.id = favorites.kdrama_id JOIN useraccount ON favorites.user_id = useraccount.id WHERE favorites.user_id = $1",
+      "SELECT k_dramas.* , favorites.*, useraccount.username FROM k_dramas JOIN favorites ON k_dramas.id = favorites.kdrama_id JOIN useraccount ON favorites.user_id = useraccount.id WHERE favorites.user_id = $1 AND favorites.is_favorited = true",
       [userId]
     );
     res.json(favouritesOfUser.rows);
