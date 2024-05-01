@@ -9,7 +9,7 @@ const {
 const { authUser, authAdmin } = require("../middleware/auth");
 const router = express.Router();
 
-router.get("/getkdrama", getAllKdrama);
+router.get("/getkdrama", authUser, getAllKdrama);
 router.post("/addkdrama", authAdmin, addKdrama);
 router.patch("/updatekdrama/:id", authAdmin, updateKdrama);
 router.delete("/deletekdrama/:name", authAdmin, deleteKdrama);
