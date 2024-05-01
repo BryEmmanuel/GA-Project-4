@@ -3,7 +3,9 @@ const pool = require("../db/db");
 // get all discussion
 const getAllDiscussion = async (req, res) => {
   try {
-    const allDiscussion = await pool.query("SELECT * FROM discussion");
+    const allDiscussion = await pool.query(
+      "SELECT discussion.* , k_dramas.name AS k_drama_name , useraccount.username FROM discussion JOIN k_dramas ON discussion.k_drama_id = k_dramas.id JOIN useraccount ON discussion.user_id = useraccount.id"
+    );
     res.json(allDiscussion.rows);
   } catch (error) {
     console.error(error.message);
