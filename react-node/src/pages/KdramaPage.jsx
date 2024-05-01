@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import UserContext from "../context/user";
 import YoutubeEmbed from "../components/YoutubeEmbed";
 import { FcLike } from "react-icons/fc";
+import { FcDislike } from "react-icons/fc";
 
 const KdramaPage = () => {
   // useParams
@@ -103,6 +104,7 @@ const KdramaPage = () => {
       );
       if (res.ok) {
         setFavouritedKdramas(true);
+        alert("favourited");
       } else {
         console.log("error , failed to favourite kdrama");
       }
@@ -111,10 +113,57 @@ const KdramaPage = () => {
     }
   };
 
+  // function to unfavourite kdrama
+  const removeFavouriteKdrama = async () => {
+    try {
+      const res = await fetchData(
+        "/favourites/removefavourites",
+        "DELETE",
+        { userId: userCtx.userId, kdramaId: kdramaid },
+        userCtx.accessToken
+      );
+      if (res.ok) {
+        console.log(favouritedKdramas);
+        setFavouritedKdramas(false);
+        console.log(favouritedKdramas);
+        alert("unfavourited");
+        console.log(favouritedKdramas);
+      } else {
+        console.log("error, failed to unfavourite kdrama");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Fetch the user's favorites list
+  const fetchUserFavourites = async () => {
+    console.log(userCtx.userId);
+    const res = await fetchData(
+      "/favourites/userfavourites/" + userCtx.userId,
+      "GET",
+      undefined,
+      userCtx.accessToken
+    );
+    if (res.ok) {
+      console.log(res.data);
+      const userFavourites = res.data;
+      // Check if the current K-drama is in the user's favorites list
+      const isFavorited = userFavourites.some(
+        (fav) => fav.kdrama_id === kdramaid
+      );
+      setFavouritedKdramas(isFavorited);
+    }
+  };
+
   useEffect(() => {
     getKdramaById();
     getKdramaDiscussionById();
-  }, []);
+    fetchUserFavourites();
+    if (!favouritedKdramas) {
+      console.log("K-drama has been unfavorited");
+    }
+  }, [favouritedKdramas, kdramaid]);
   return (
     <>
       <Navbar></Navbar>
@@ -163,9 +212,16 @@ const KdramaPage = () => {
       </div>
       <div className="buttons_container">
         <button onClick={() => setShowPostModal(true)}>Create a Post!</button>
-        <button onClick={() => favouriteKdrama()}>
-          <FcLike />
-        </button>
+        {favouritedKdramas === false ? (
+          <button onClick={() => favouriteKdrama()}>
+            <FcLike />
+          </button>
+        ) : (
+          <button onClick={() => removeFavouriteKdrama()}>
+            <FcDislike />
+          </button>
+        )}
+
         {userCtx.role === "Admin" && (
           <button
             onClick={() => {
