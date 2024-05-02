@@ -72,6 +72,7 @@ const Comments = () => {
 
   // function to convert time format
   function timeAgo(date) {
+    // new Date() - date gives the difference in milliseconds
     const seconds = Math.floor((new Date() - date) / 1000);
 
     const interval = Math.floor(seconds / 31536000);
