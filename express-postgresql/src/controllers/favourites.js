@@ -31,8 +31,8 @@ const addFavourites = async (req, res) => {
     }
     // add favourite if it doesn't exist
     await pool.query(
-      "INSERT INTO favorites (user_id, kdrama_id) VALUES ($1,$2)",
-      [userId, kdramaId]
+      "INSERT INTO favorites (user_id, kdrama_id, is_favorited) VALUES ($1,$2,$3)",
+      [userId, kdramaId, true]
     );
     res.status(200).json({ status: "success", msg: "kdrama favourited" });
   } catch (error) {
