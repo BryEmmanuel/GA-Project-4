@@ -1,0 +1,95 @@
+.page.sidebar-2-page {
+  background: #222831;
+}
+
+.sidebar-2 {
+  position: relative;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 62px;
+  height: 100%;
+  background: #222831;
+  transition: width 0.4s;
+}
+
+.sidebar-2.open {
+  width: 260px;
+}
+
+.sidebar-2 .inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 260px;
+}
+
+.sidebar-2 header {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 6px;
+  background: rgb(#222831 / 25%);
+}
+
+.sidebar-2-burger {
+  width: 40px;
+  height: 50px;
+  display: grid;
+  place-content: center;
+  color: #f9f9f9;
+  background-color: black;
+}
+.sidebar-2-burger::before {
+  background-color: transparent;
+}
+
+.sidebar-2 nav {
+  display: grid;
+  padding: 6px;
+  gap: 2px;
+}
+
+.sidebar-2 nav > button {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  height: 44px;
+  width: 50px;
+  font-size: 16px;
+  text-transform: capitalize;
+  line-height: 1;
+  padding: 17px;
+  border-radius: 8px;
+  background-color: black;
+  color: #f9f9f9;
+}
+.sidebar-2 nav > button h6 {
+  position: relative;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.sidebar-2 nav > button:hover {
+  background: rgb(0 0 0 / 30%);
+  color: white;
+  background-color: transparent;
+}
+
+.sidebar-2 nav > button::before {
+  background-color: transparent;
+}
+
+.sidebar-2 header > img,
+.sidebar-2 nav > button p {
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.sidebar-2.open :is(nav button p, header > img) {
+  opacity: 1;
+}
+
+.sidebar-2.open nav > button {
+  width: 100%;
+}
