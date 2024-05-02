@@ -50,6 +50,9 @@ A K-drama tracker and discussion board for k-drama lovers alike.
 - PERN (Postgresql, Express, React, Node)
 - React Icons : https://react-icons.github.io/react-icons/
 
+- Wireframe [Figma](https://www.figma.com/file/1TzLUYfAm58sMrHh4BuNSF/GA-Project-4---K-drama-Tracker-%2B-Discussion?type=design&node-id=0-1&mode=design&t=YxnH509ZB4A4vWem-0)
+- Public Board [Trello](https://trello.com/b/uvG8zCRO/ga-project-4)
+
 ## Getting Started
 
 Create an account and start using the app!
